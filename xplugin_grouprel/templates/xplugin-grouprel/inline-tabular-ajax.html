@@ -5,6 +5,14 @@
 
 {% block box_content %}
 
-    <p class="text-muted">{% trans "Null" %}</p>
+    <table id="ajax-table" class="table table-striped table-bordered" style="width:100%">
+        <thead>
+            <tr>
+                {% for columns in table.columns %}
+                    <th>{{ columns }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+    </table>
 
 {% endblock box_content %}

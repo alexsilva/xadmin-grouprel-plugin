@@ -10,16 +10,25 @@ from xadmin.views import BaseAdminPlugin
 class GroupRelPlugin(BaseAdminPlugin):
     template_table_ajax = 'xplugin-grouprel/inline-tabular-ajax.html'
 
-    group_related_model = None
+    group_related_table = None
 
     def init_request(self, object_id, *args, **kwargs):
         model = getattr(self.admin_view, "model", None)
-        self.group_related_model = getattr(self.admin_view, "group_related_model",
-                                           self.group_related_model)
-        return self.group_related_model and inspect.isclass(model) and issubclass(model, Group)
+        self.group_related_table = getattr(self.admin_view, "group_related_table",
+                                           self.group_related_table)
+
+        if inspect.isclass(self.group_related_table):
+            self.group_related_table = self.group_related_table(self)
+
+        return self.group_related_table and inspect.isclass(model) and issubclass(model, Group)
 
     def get_context(self, context):
-        context['opts'] = self.group_related_model._meta
+        """Context from table template"""
+        context['opts'] = self.group_related_table.opts
+        context['table'] = dict(
+            instance=self.group_related_table,
+            columns=self.group_related_table.get_columns()
+        )
         return context
 
     def block_after_fieldsets(self, context, nodes, *args, **kwargs):
@@ -30,6 +39,6 @@ class GroupRelPlugin(BaseAdminPlugin):
 
     def get_media(self, media):
         media.add_js((
-            settings.STATIC_URL + "/xplugin-grouprel/js/jquery.dataTables.min.js",
+            settings.STATIC_URL + "xplugin-grouprel/js/jquery.dataTables.min.js",
         ))
         return media
