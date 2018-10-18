@@ -14,6 +14,10 @@ class GroupRelatedTable(object):
     def opts(self):
         return self.model._meta
 
+    def queryset(self):
+        """main queryset"""
+        return self.model.objects.all()
+
     def get_columns(self):
         """Returns a list with verbose_name of the configured fields"""
         names = []
