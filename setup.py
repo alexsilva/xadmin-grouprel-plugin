@@ -9,5 +9,5 @@ setup(
     author='alex',
     author_email='alex@fabricadigital.com.br',
     description='xadmin plugin that displays user related to a group (datatable)',
-    include_package_data=Trues
+    include_package_data=True
 )
