@@ -1,10 +1,10 @@
 import inspect
 
+from django.conf import settings
 from django.contrib.auth.models import Group
-from django.template import RequestContext
 from django.template.loader import render_to_string
-from xadmin.views import BaseAdminPlugin
 from xadmin.plugins.utils import get_context_dict
+from xadmin.views import BaseAdminPlugin
 
 
 class GroupRelPlugin(BaseAdminPlugin):
@@ -25,6 +25,11 @@ class GroupRelPlugin(BaseAdminPlugin):
     def block_after_fieldsets(self, context, nodes, *args, **kwargs):
         html = render_to_string(
             self.template_table_ajax,
-            context=get_context_dict(context),
-            context_instance=RequestContext(self.request))
+            context=get_context_dict(context))
         return nodes.append(html)
+
+    def get_media(self, media):
+        media.add_js((
+            settings.STATIC_URL + "/xplugin-grouprel/js/jquery.dataTables.min.js",
+        ))
+        return media
