@@ -7,7 +7,7 @@ class GroupRelatedTable(object):
     model = None
     fields = ()
 
-    def __init__(self, plugin):
+    def __init__(self, plugin=None):
         self.plugin = plugin
 
     @cached_property

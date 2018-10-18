@@ -4,6 +4,7 @@ setup(
     name='xadmin-grouprel-plugin',
     version='1.0',
     packages=['xplugin_grouprel'],
+    install_requires=["django-datatables-view"],
     url='https://github.com/alexsilva/xadmin-grouprel-plugin',
     license='MIT',
     author='alex',

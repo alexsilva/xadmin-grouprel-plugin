@@ -4,6 +4,9 @@
 {% block box_title %}{{ opts.verbose_name_plural|title }}{% endblock box_title %}
 
 {% block box_content %}
+    <script type="application/javascript">
+        var ajax_table_url = "{% url "xadmin:grouprel-dataview" app_label=opts.app_label model_name=opts.model_name  %}";
+    </script>
 
     <table id="ajax-table" class="table table-striped table-bordered" style="width:100%">
         <thead>

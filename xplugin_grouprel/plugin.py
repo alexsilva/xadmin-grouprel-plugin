@@ -3,8 +3,11 @@ import inspect
 from django.conf import settings
 from django.contrib.auth.models import Group
 from django.template.loader import render_to_string
+from xadmin import site
 from xadmin.plugins.utils import get_context_dict
 from xadmin.views import BaseAdminPlugin
+
+from xplugin_grouprel.views import GroupRelDataView
 
 
 class GroupRelPlugin(BaseAdminPlugin):
@@ -48,3 +51,8 @@ class GroupRelPlugin(BaseAdminPlugin):
             settings.STATIC_URL + "xplugin-grouprel/js/group.table.handler.js",
         ))
         return media
+
+
+site.register_view(r'^table/(?P<app_label>\w+)/(?P<model_name>\w+)/',
+                   GroupRelDataView,
+                   name='grouprel-dataview')
