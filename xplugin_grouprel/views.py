@@ -7,6 +7,7 @@ from xadmin.views import BaseAdminView
 
 class GroupRelDataView(BaseDatatableView, BaseAdminView):
     """Data view of the table datatable"""
+
     def __init__(self, *args, **kwargs):
         self.plugin_classes = []
         super(GroupRelDataView, self).__init__(*args, **kwargs)
@@ -50,5 +51,6 @@ class GroupRelDataView(BaseDatatableView, BaseAdminView):
     def get_initial_queryset(self):
         if not self.has_model_perm(self.model, 'view', self.request.user):
             raise PermissionDenied
-
-        return self.table.queryset()
+        queryset = self.table.queryset()
+        queryset = queryset.filter(group__pk=self.kwargs['pk'])
+        return queryset

@@ -58,6 +58,6 @@ class GroupRelPlugin(BaseAdminPlugin):
         return media
 
 
-site.register_view(r'^table/(?P<app_label>\w+)/(?P<model_name>\w+)/',
+site.register_view(r'^table/(?P<app_label>\w+)/(?P<model_name>\w+)/(?P<pk>\d+)',
                    GroupRelDataView,
                    name='grouprel-dataview')
