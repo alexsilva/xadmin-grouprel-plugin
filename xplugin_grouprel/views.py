@@ -6,7 +6,7 @@ from xadmin.views import BaseAdminView
 
 
 class GroupRelDataView(BaseDatatableView, BaseAdminView):
-
+    """Data view of the table datatable"""
     def __init__(self, *args, **kwargs):
         self.plugin_classes = []
         super(GroupRelDataView, self).__init__(*args, **kwargs)

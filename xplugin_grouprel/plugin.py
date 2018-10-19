@@ -11,6 +11,7 @@ from xplugin_grouprel.views import GroupRelDataView
 
 
 class GroupRelPlugin(BaseAdminPlugin):
+    """Plugin that adds a table with model data related to the group"""
     template_table_ajax = 'xplugin-grouprel/inline-tabular-ajax.html'
 
     group_related_table = None
