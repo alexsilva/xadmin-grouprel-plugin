@@ -46,6 +46,7 @@ class GroupRelPlugin(BaseAdminPlugin):
         media.add_css({
             'screen': (
                 settings.STATIC_URL + "xplugin-grouprel/css/dataTables.bootstrap.min.css",
+                settings.STATIC_URL + "xplugin-grouprel/css/styles.css",
             )
         })
         media.add_js((
