@@ -4,9 +4,16 @@ Xadmin plugin that displays user related to a group (datatable)
 Setup
 -
 
-Add the app to installed-apps: xplugin_grouprel
+Add the app to installed-apps: `xplugin_grouprel`
 
-In the adminx script, implement the table interface.
+Register the plugin:
+```
+from xplugin_grouprel.plugin import GroupRelPlugin
+
+site.register_plugin(GroupRelPlugin, UpdateAdminView)
+```
+
+In the adminx script, implement the table interface:
 ```
 from xplugin_grouprel import GroupRelatedTable
 
