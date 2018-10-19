@@ -31,6 +31,12 @@ class GroupRelPlugin(BaseAdminPlugin):
     def get_context(self, context):
         """Context from table template"""
         context['opts'] = self.group_related_table.opts
+        context['ajax_table_url'] = self.admin_view.get_admin_url(
+            "grouprel-dataview",
+            app_label=self.group_related_table.opts.app_label,
+            model_name=self.group_related_table.opts.model_name,
+            pk=self.admin_view.org_obj.pk
+        )
         context['table'] = dict(
             instance=self.group_related_table,
             columns=self.group_related_table.get_columns()
