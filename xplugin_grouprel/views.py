@@ -10,22 +10,26 @@ class GroupRelDataView(BaseDatatableView, BaseAdminView):
     def __init__(self, *args, **kwargs):
         self.plugin_classes = []
         super(GroupRelDataView, self).__init__(*args, **kwargs)
+        self.column_first = None
         self.table = None
 
     def render_column(self, row, column):
         obj = row
         try:
-            model, column = column.split("__")
+            field, _column = column.split("__")
         except ValueError:
-            model, column = None, column
+            field, _column = None, column
 
-        if model is not None:
-            value = reduce(lambda x, y: getattr(x, y), [obj, model, column])
+        if field is not None:
+            value = reduce(lambda x, y: getattr(x, y), [obj, field, _column])
+            field = self.table.opts.get_field(field)
         else:
             value = getattr(obj, column)
 
-        if value and model and hasattr(model, 'get_absolute_url'):
-            return '<a href="%s">%s</a>' % (model.get_absolute_url(), value)
+        if self.column_first == column and value and field is not None:
+            change_url = self.get_model_url(field.rel.to, 'change',
+                                            getattr(obj, field.name).pk)
+            return u'<a href="%s">%s</a>' % (change_url, value)
         return value
 
     def initialize(self, *args, **kwargs):
@@ -37,6 +41,10 @@ class GroupRelDataView(BaseDatatableView, BaseAdminView):
 
         self.columns = self.table.fields
 
+        try:
+            self.column_first = self.columns[0]
+        except IndexError:
+            self.column_first = None
         return super(GroupRelDataView, self).initialize(*args, **kwargs)
 
     def get_initial_queryset(self):

@@ -23,7 +23,9 @@ class GroupRelPlugin(BaseAdminPlugin):
         if inspect.isclass(self.group_related_table):
             self.group_related_table = self.group_related_table(self)
 
-        return self.group_related_table and inspect.isclass(model) and issubclass(model, Group)
+        return bool(self.group_related_table is not None
+                    and inspect.isclass(model)
+                    and issubclass(model, Group))
 
     def get_context(self, context):
         """Context from table template"""
