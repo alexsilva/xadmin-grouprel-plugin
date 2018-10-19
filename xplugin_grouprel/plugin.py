@@ -48,6 +48,7 @@ class GroupRelPlugin(BaseAdminPlugin):
         })
         media.add_js((
             settings.STATIC_URL + "xplugin-grouprel/js/jquery.dataTables.min.js",
+            settings.STATIC_URL + "xplugin-grouprel/js/dataTables.bootstrap.min.js",
             settings.STATIC_URL + "xplugin-grouprel/js/group.table.handler.js",
         ))
         return media
