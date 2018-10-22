@@ -1,5 +1,6 @@
 # coding=utf-8
 from django.utils.functional import cached_property
+from django.db import models
 import collections
 
 
@@ -35,20 +36,21 @@ class GroupRelatedTable(object):
     def columns(self):
         """Returns a list with verbose_name of the configured fields"""
         names = []
-        for index, field_name in enumerate(self.fields):
+        for index, column in enumerate(self.fields):
             try:
-                model, field_name = field_name.split("__")
+                field, db_column = column.split("__")
+                field = self.opts.get_field(field)
             except ValueError:
-                model, field_name = None, field_name
-            if hasattr(self, field_name):
-                field = getattr(self, field_name)
-            elif model is not None:
-                model = self.opts.get_field(model).rel.to
-                field = model._meta.get_field(field_name)
+                field = db_column = None
+
+            if field is None and hasattr(self, column):
+                field = getattr(self, column)
+            elif db_column is not None and isinstance(field, models.ForeignKey):
+                field = field.rel.to._meta.get_field(db_column)
             else:
-                field = self.opts.get_field(field_name)
+                field = self.opts.get_field(column)
             names.append({
-                'verbose_name': (getattr(field, "verbose_name", field_name) or field_name),
+                'verbose_name': (getattr(field, "verbose_name", column) or column),
                 # datatable configuration
                 'datatable': {
                     'searchable': getattr(field, 'datatable_searchable', True),
