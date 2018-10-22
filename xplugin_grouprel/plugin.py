@@ -39,7 +39,7 @@ class GroupRelPlugin(BaseAdminPlugin):
         )
         context['table'] = dict(
             instance=self.group_related_table,
-            columns=self.group_related_table.get_columns()
+            columns=self.group_related_table.columns
         )
         return context
 

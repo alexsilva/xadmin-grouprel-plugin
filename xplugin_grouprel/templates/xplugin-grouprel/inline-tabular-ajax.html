@@ -5,14 +5,27 @@
 
 {% block box_content %}
     <script type="application/javascript">
-        var ajax_table_url = "{{ ajax_table_url }}";
+        var grouprel_datatable = {
+            ajax: {
+                url: "{{ ajax_table_url }}"
+            },
+            columns_defs: []
+        };
+        {% for column in table.columns %}
+        grouprel_datatable.columns_defs.push({
+            targets: {{ column.datatable.index }},
+            searchable: {{ column.datatable.searchable|yesno:"true,false" }},
+            orderable: {{ column.datatable.orderable|yesno:"true,false" }},
+            visible: {{ column.datatable.visible|yesno:"true,false" }},
+        });
+        {% endfor %}
     </script>
 
     <table id="ajax-table" class="table table-striped table-bordered" style="width:100%">
         <thead>
             <tr>
-                {% for columns in table.columns %}
-                    <th>{{ columns }}</th>
+                {% for column in table.columns %}
+                    <th>{{ column.verbose_name }}</th>
                 {% endfor %}
             </tr>
         </thead>

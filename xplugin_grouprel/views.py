@@ -3,6 +3,7 @@ from django.contrib.auth.models import Group
 from django.core.exceptions import PermissionDenied
 from django_datatables_view.base_datatable_view import BaseDatatableView
 from xadmin.views import BaseAdminView
+from django.db import models
 
 
 class GroupRelDataView(BaseDatatableView, BaseAdminView):
@@ -13,21 +14,33 @@ class GroupRelDataView(BaseDatatableView, BaseAdminView):
         super(GroupRelDataView, self).__init__(*args, **kwargs)
         self.column_first = None
         self.table = None
+        self.map_fields = None
+
+    def get_filter_method(self):
+        return self.FILTER_ICONTAINS
 
     def render_column(self, row, column):
+        column_val = self.map_fields[column]
         obj = row
         try:
-            field, _column = column.split("__")
-        except ValueError:
-            field, _column = None, column
-
-        if field is not None:
-            value = reduce(lambda x, y: getattr(x, y), [obj, field, _column])
+            field, db_column = column_val.split("__")
             field = self.table.opts.get_field(field)
-        else:
-            value = getattr(obj, column)
+        except ValueError:
+            field = db_column = None
 
-        if self.column_first == column and value and field is not None:
+        if field is None and hasattr(self.table, column_val):
+            value = getattr(self.table, column_val)(obj)
+            try:
+                field = self.table.opts.get_field(column)
+            except models.FieldDoesNotExist:
+                field = None
+        elif isinstance(field, models.ForeignKey):
+            value = reduce(lambda x, y: getattr(x, y), [obj, field.name, db_column])
+        else:
+            value = unicode(getattr(obj, column))
+            field = self.table.opts.get_field(column)
+
+        if self.column_first == column and value and field and isinstance(field, models.ForeignKey):
             change_url = self.get_model_url(field.rel.to, 'change',
                                             getattr(obj, field.name).pk)
             return u'<a href="%s">%s</a>' % (change_url, value)
@@ -39,9 +52,8 @@ class GroupRelDataView(BaseDatatableView, BaseAdminView):
         admin_class = self.admin_site._registry.get(Group)
 
         self.table = admin_class.group_related_table()
-
-        self.columns = self.table.fields
-
+        self.map_fields = self.table.map_fields
+        self.columns = self.map_fields.keys()
         try:
             self.column_first = self.columns[0]
         except IndexError:
