@@ -1,9 +1,11 @@
 from django.apps import apps
 from django.contrib.auth.models import Group
 from django.core.exceptions import PermissionDenied
-from django_datatables_view.base_datatable_view import BaseDatatableView
-from xadmin.views import BaseAdminView
 from django.db import models
+from django.db.models import Q
+from xadmin.views import BaseAdminView
+
+from django_datatables_view.base_datatable_view import BaseDatatableView
 
 
 class GroupRelDataView(BaseDatatableView, BaseAdminView):
@@ -18,6 +20,29 @@ class GroupRelDataView(BaseDatatableView, BaseAdminView):
 
     def get_filter_method(self):
         return self.FILTER_ICONTAINS
+
+    def get_filter_query(self):
+        search = self._querydict.get('search[value]', None)
+        query = Q()
+        if search:
+            # Multiple column search
+            filter_method = self.get_filter_method()
+            chunks = []
+            for s in search.split(" ", 4):
+                s = s.strip()
+                if len(s) == 0:
+                    continue
+                chunks.append(s)
+            if len(chunks) > 0:
+                for column in self.table.columns:
+                    config = column['queryset']
+                    if config['search_term']:
+                        for chunk in chunks:
+                            chunk = chunk.strip()
+                            if not chunk:
+                                continue
+                            query |= Q(**{"{0[name]}__{1:s}".format(config, filter_method): chunk})
+        return query
 
     def render_column(self, row, column):
         column_val = self.map_fields[column]

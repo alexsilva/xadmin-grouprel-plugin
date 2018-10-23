@@ -36,21 +36,27 @@ class GroupRelatedTable(object):
     def columns(self):
         """Returns a list with verbose_name of the configured fields"""
         names = []
-        for index, column in enumerate(self.fields):
+        fields = self.map_fields
+        for index, column in enumerate(fields.iterkeys()):
+            column_val = fields[column]
             try:
-                field, db_column = column.split("__")
+                field, db_column = column_val.split("__")
                 field = self.opts.get_field(field)
             except ValueError:
                 field = db_column = None
 
-            if field is None and hasattr(self, column):
-                field = getattr(self, column)
+            if field is None and hasattr(self, column_val):
+                field = getattr(self, column_val)
             elif db_column is not None and isinstance(field, models.ForeignKey):
                 field = field.rel.to._meta.get_field(db_column)
             else:
                 field = self.opts.get_field(column)
             names.append({
                 'verbose_name': (getattr(field, "verbose_name", column) or column),
+                "queryset": {
+                    "search_term": getattr(field, 'queryset_search_term', False),
+                    'name': column,
+                },
                 # datatable configuration
                 'datatable': {
                     'searchable': getattr(field, 'datatable_searchable', True),
