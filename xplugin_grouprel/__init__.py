@@ -4,9 +4,10 @@ from django.db import models
 import collections
 
 
-class GroupRelatedTable(object):
+class GroupM2MRelation(object):
     """interface class"""
-    model = None
+    through = None  # intermediate table
+    model = None  # model related to the group
     fields = ()
 
     def __init__(self, plugin=None):
@@ -14,11 +15,11 @@ class GroupRelatedTable(object):
 
     @cached_property
     def opts(self):
-        return self.model._meta
+        return self.through._meta
 
     def queryset(self):
         """main queryset"""
-        return self.model.objects.all()
+        return self.through.objects.all()
 
     @cached_property
     def map_fields(self):

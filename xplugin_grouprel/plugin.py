@@ -14,32 +14,32 @@ class GroupRelPlugin(BaseAdminPlugin):
     """Plugin that adds a table with model data related to the group"""
     template_table_ajax = 'xplugin-grouprel/inline-tabular-ajax.html'
 
-    group_related_table = None
+    group_m2m_relation = None
 
     def init_request(self, object_id, *args, **kwargs):
         model = getattr(self.admin_view, "model", None)
-        self.group_related_table = getattr(self.admin_view, "group_related_table",
-                                           self.group_related_table)
+        self.group_m2m_relation = getattr(self.admin_view, "group_m2m_relation",
+                                          self.group_m2m_relation)
 
-        if inspect.isclass(self.group_related_table):
-            self.group_related_table = self.group_related_table(self)
+        if inspect.isclass(self.group_m2m_relation):
+            self.group_m2m_relation = self.group_m2m_relation(self)
 
-        return bool(self.group_related_table is not None
+        return bool(self.group_m2m_relation is not None
                     and inspect.isclass(model)
                     and issubclass(model, Group))
 
     def get_context(self, context):
         """Context from table template"""
-        context['opts'] = self.group_related_table.opts
+        context['opts'] = self.group_m2m_relation.opts
         context['ajax_table_url'] = self.admin_view.get_admin_url(
             "grouprel-dataview",
-            app_label=self.group_related_table.opts.app_label,
-            model_name=self.group_related_table.opts.model_name,
+            app_label=self.group_m2m_relation.opts.app_label,
+            model_name=self.group_m2m_relation.opts.model_name,
             pk=self.admin_view.org_obj.pk
         )
         context['table'] = dict(
-            instance=self.group_related_table,
-            columns=self.group_related_table.columns
+            instance=self.group_m2m_relation,
+            columns=self.group_m2m_relation.columns
         )
         return context
 

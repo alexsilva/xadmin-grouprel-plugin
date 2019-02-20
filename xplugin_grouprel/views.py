@@ -76,7 +76,7 @@ class GroupRelDataView(BaseDatatableView, BaseAdminView):
 
         admin_class = self.admin_site._registry.get(Group)
 
-        self.table = admin_class.group_related_table()
+        self.table = admin_class.group_m2m_relation()
         self.map_fields = self.table.map_fields
         self.columns = self.map_fields.keys()
         try:
