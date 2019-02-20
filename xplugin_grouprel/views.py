@@ -69,9 +69,6 @@ class GroupRelDataView(BaseDatatableView, BaseAdminView):
                     config = column['queryset']
                     if config['search_term']:
                         for chunk in chunks:
-                            chunk = chunk.strip()
-                            if not chunk:
-                                continue
                             query |= Q(**{"{0[name]}__{1:s}".format(config, filter_method): chunk})
         return query
 
