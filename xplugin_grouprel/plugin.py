@@ -4,12 +4,12 @@ from django.conf import settings
 from django.contrib.auth.models import Group
 from django.template.loader import render_to_string
 from django.utils.encoding import force_text
+from django.utils.translation import ugettext as _
 from xadmin import site
 from xadmin.plugins.utils import get_context_dict
 from xadmin.views import BaseAdminPlugin
-from django.utils.translation import ugettext as _
 
-from xplugin_grouprel.views import GroupRelDataView
+from xplugin_grouprel.views import GroupRelDataView, ObjGroupAddView
 
 
 class GroupRelPlugin(BaseAdminPlugin):
@@ -44,6 +44,8 @@ class GroupRelPlugin(BaseAdminPlugin):
         context['table_model'] = {
             'url': self.admin_view.get_model_url(model, "add"),
             'title': _('Add %s') % force_text(model._meta.verbose_name),
+            'refresh_url': self.admin_view.get_admin_url("grouprel-groupobj-add",
+                                                         pk=self.admin_view.org_obj.pk)
         }
         context['table'] = dict(
             instance=self.group_m2m_relation,
@@ -72,6 +74,9 @@ class GroupRelPlugin(BaseAdminPlugin):
         ))
         return media
 
+
+site.register_view(r'^table/obj/(?P<pk>\d+)/add', ObjGroupAddView,
+                   name='grouprel-groupobj-add')
 
 site.register_view(r'^table/(?P<app_label>\w+)/(?P<model_name>\w+)/(?P<pk>\d+)',
                    GroupRelDataView,

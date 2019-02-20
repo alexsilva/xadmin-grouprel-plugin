@@ -13,7 +13,8 @@
             button: {
                 text: "<i class=\"fa fa-plus\"></i>",
                 title: "{{ table_model.title }}",
-                url: "{{ table_model.url }}"
+                url: "{{ table_model.url }}",
+                refresh_url: "{{ table_model.refresh_url }}"
             }
         };
         {% for column in table.columns %}

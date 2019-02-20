@@ -1,11 +1,42 @@
 from django.apps import apps
 from django.contrib.auth.models import Group
-from django.core.exceptions import PermissionDenied
+from django.core.exceptions import PermissionDenied, ValidationError
 from django.db import models
 from django.db.models import Q
+from django.http import HttpResponse
+from django_datatables_view.base_datatable_view import BaseDatatableView
 from xadmin.views import BaseAdminView
 
-from django_datatables_view.base_datatable_view import BaseDatatableView
+
+class ObjGroupAddView(BaseAdminView):
+
+    def get(self, request, **kwargs):
+        """Performs the operation of adding an object to the group"""
+        try:
+            object_id = request.GET['obj_id']
+        except KeyError:
+            raise PermissionDenied
+
+        admin_class = self.admin_site._registry.get(Group)
+        table = admin_class.group_m2m_relation()
+        model = table.get_model()
+
+        # check add perm
+        if not self.has_model_perm(model, 'add', self.request.user):
+            raise PermissionDenied
+
+        try:
+            object_id = model._meta.pk.to_python(object_id)
+        except ValidationError:
+            raise PermissionDenied
+
+        group = Group.objects.get(pk=kwargs['pk'])
+
+        # Adds the group to the object
+        obj = model.objects.get(pk=object_id)
+        obj.groups.add(group)
+
+        return HttpResponse('success')
 
 
 class GroupRelDataView(BaseDatatableView, BaseAdminView):
