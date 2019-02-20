@@ -19,7 +19,14 @@
         buttons: {
             buttons: [{
                 text: grouprel_datatable.button.text,
-                action: function (e, dt, node, config) {}
+                action: function (e, dt, node, config) {
+                    $('div.modal.quick-form')
+                        .find(".has-error").each(function(){
+                            var $input = $(this);
+                            $input.removeClass("has-error");
+                            $input.parent().find("span[id^=error_]").remove()
+                    })
+                }
             }],
             dom: {
                 button: {
