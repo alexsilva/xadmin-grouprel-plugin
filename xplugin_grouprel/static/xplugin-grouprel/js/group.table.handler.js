@@ -13,6 +13,7 @@
         "language": {
             "url": static_url + window.__admin_language_code__ + ".json"
         },
+        "scrollX": true,
         "processing": true,
         "serverSide": true,
         "columnDefs": grouprel_datatable.columns_defs,
