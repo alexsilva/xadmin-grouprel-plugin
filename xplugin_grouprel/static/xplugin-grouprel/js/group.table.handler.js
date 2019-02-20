@@ -40,6 +40,7 @@
                 .attr("title", grouprel_datatable.button.title)
                 .attr("href", grouprel_datatable.button.url)
                 .attr("data-refresh-url", grouprel_datatable.button.refresh_url + "?obj_id=");
+            $button.find('span').contents().unwrap();
             $button.ajax_addbtn();
         },
     });
