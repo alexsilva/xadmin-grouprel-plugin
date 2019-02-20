@@ -3,9 +3,11 @@ import inspect
 from django.conf import settings
 from django.contrib.auth.models import Group
 from django.template.loader import render_to_string
+from django.utils.encoding import force_text
 from xadmin import site
 from xadmin.plugins.utils import get_context_dict
 from xadmin.views import BaseAdminPlugin
+from django.utils.translation import ugettext as _
 
 from xplugin_grouprel.views import GroupRelDataView
 
@@ -37,6 +39,12 @@ class GroupRelPlugin(BaseAdminPlugin):
             model_name=self.group_m2m_relation.opts.model_name,
             pk=self.admin_view.org_obj.pk
         )
+
+        model = self.group_m2m_relation.get_model()
+        context['table_model'] = {
+            'url': self.admin_view.get_model_url(model, "add"),
+            'title': _('Add %s') % force_text(model._meta.verbose_name),
+        }
         context['table'] = dict(
             instance=self.group_m2m_relation,
             columns=self.group_m2m_relation.columns
@@ -59,7 +67,8 @@ class GroupRelPlugin(BaseAdminPlugin):
         media.add_js((
             settings.STATIC_URL + "xplugin-grouprel/js/jquery.dataTables.min.js",
             settings.STATIC_URL + "xplugin-grouprel/js/dataTables.bootstrap.min.js",
-            settings.STATIC_URL + "xplugin-grouprel/js/group.table.handler.js",
+            settings.STATIC_URL + "xplugin-grouprel/js/dataTables.buttons.min.js",
+            settings.STATIC_URL + "xplugin-grouprel/js/group.table.handler.js"
         ))
         return media
 

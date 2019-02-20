@@ -1,3 +1,17 @@
 div#ajax-table_wrapper {
     padding-top: 5px;
 }
+
+div.dt-buttons {
+    margin-right: 5px;
+    position: relative;
+    float: left;
+}
+
+a.btn-table-new {
+    margin-left: 0 !important;
+}
+div.dataTables_length {
+    position: relative;
+    float: left;
+}

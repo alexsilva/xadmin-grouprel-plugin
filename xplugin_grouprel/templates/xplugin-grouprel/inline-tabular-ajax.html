@@ -9,7 +9,12 @@
             ajax: {
                 url: "{{ ajax_table_url }}"
             },
-            columns_defs: []
+            columns_defs: [],
+            button: {
+                text: "<i class=\"fa fa-plus\"></i>",
+                title: "{{ table_model.title }}",
+                url: "{{ table_model.url }}"
+            }
         };
         {% for column in table.columns %}
         grouprel_datatable.columns_defs.push({

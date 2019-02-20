@@ -15,9 +15,9 @@ site.register_plugin(GroupRelPlugin, UpdateAdminView)
 
 In the adminx script, implement the table interface:
 ```
-from xplugin_grouprel import GroupRelatedTable
+from xplugin_grouprel import GroupM2MRelation
 
-class GroupRelatedTableImpl(GroupRelatedTable):
+class GroupM2MRelationImpl(GroupM2MRelation):
     # Group related model
     model = User.groups.through
     
@@ -34,5 +34,5 @@ from xplugin_grouprel.plugin import GroupRelPlugin
 
 class ModelGroupAdmin(object):
     # Activate the plugin in the group admin model
-    group_related_table = GroupRelatedTableImpl
+    group_m2m_relation = GroupM2MRelationImpl
 ```

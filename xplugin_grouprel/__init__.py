@@ -21,6 +21,9 @@ class GroupM2MRelation(object):
         """main queryset"""
         return self.through.objects.all()
 
+    def get_model(self):
+        return self.model
+
     @cached_property
     def map_fields(self):
         fields = collections.OrderedDict()

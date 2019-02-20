@@ -1,7 +1,8 @@
 (function ($) {
     var csrftoken = $.getCookie('csrftoken');
     var static_url = window.__admin_media_prefix__.replace(/xadmin\/$/i, "xplugin-grouprel/");
-    $('#ajax-table').DataTable({
+    var table = $('#ajax-table').DataTable({
+        dom: 'Blfrtip',
         "ajax": {
             "url": grouprel_datatable.ajax.url,
             "type": "POST",
@@ -15,5 +16,24 @@
         "processing": true,
         "serverSide": true,
         "columnDefs": grouprel_datatable.columns_defs,
+        buttons: {
+            buttons: [{
+                text: grouprel_datatable.button.text,
+                action: function (e, dt, node, config) {}
+            }],
+            dom: {
+                button: {
+                    tag: "a",
+                    className: "btn btn-primary btn-md btn-ajax-table-add"
+                }
+            }
+        },
+        initComplete: function () {
+            var $button = $("a.btn-ajax-table-add")
+                .attr("title", grouprel_datatable.button.title)
+                .attr("href", grouprel_datatable.button.url)
+                .attr("data-refresh-url", "#");
+            $button.ajax_addbtn();
+        },
     });
 })(jQuery);
