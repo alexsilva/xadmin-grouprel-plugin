@@ -25,7 +25,7 @@
                 {
                     tag: "a",
                     className: "btn btn-primary btn-sm btn-ajax-table-add",
-                    text: grouprel_datatable.button.text,
+                    text:"<i class=\"fa fa-plus\"></i>",
                     action: function (e, dt, node, config) {
                         $('div.modal.quick-form')
                             .find(".has-error").each(function(){
