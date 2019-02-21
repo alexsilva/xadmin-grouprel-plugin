@@ -11,9 +11,15 @@
             },
             columns_defs: [],
             button: {
-                title: "{{ table_model.title }}",
-                url: "{{ table_model.url }}",
-                refresh_url: "{{ table_model.refresh_url }}"
+                add: {
+                    title: "{{ table_object_add.title }}",
+                    url: "{{ table_object_add.url }}",
+                    refresh_url: "{{ table_object_add.refresh_url }}"
+                },
+                delete: {
+                    url: "{{ table_object_delete.url }}",
+                    title: "{{ table_object_delete.title }}",
+                }
             }
         };
         {% for column in table.columns %}

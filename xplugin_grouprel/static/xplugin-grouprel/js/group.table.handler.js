@@ -40,16 +40,31 @@
                     className: 'btn btn-danger btn-sm btn-ajax-table-delete',
                     text: "<i class=\"fa fa-trash-o\"></i>",
                     tag: 'a',
+                    action: function ( e, dt, button, config ) {
+                        var rows = dt.rows( { selected: true } );
+                        var data = rows.data();
+                        var selected_action = [];
+                        for (var index=0; index < data.length; index++) {
+                             selected_action.push(data[index][0])
+                        }
+                        button.ajax_delbtn({
+                            selected_action: selected_action
+                        })
+                    }
                 },
             ],
         },
         initComplete: function () {
             var $button = $("a.btn-ajax-table-add")
-                .attr("title", grouprel_datatable.button.title)
-                .attr("href", grouprel_datatable.button.url)
-                .attr("data-refresh-url", grouprel_datatable.button.refresh_url + "?obj_id=");
+                .attr("title", grouprel_datatable.button.add.title)
+                .attr("href", grouprel_datatable.button.add.url)
+                .attr("data-refresh-url", grouprel_datatable.button.add.refresh_url + "?obj_id=");
             $("div.dt-buttons").find('span').contents().unwrap();
             $button.ajax_addbtn();
+
+            $("a.btn-ajax-table-delete")
+                .attr("href", grouprel_datatable.button.delete.url)
+                .attr("title", grouprel_datatable.button.delete.title)
         },
     });
 })(jQuery);

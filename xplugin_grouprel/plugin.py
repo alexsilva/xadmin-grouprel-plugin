@@ -9,7 +9,7 @@ from xadmin import site
 from xadmin.plugins.utils import get_context_dict
 from xadmin.views import BaseAdminPlugin
 
-from xplugin_grouprel.views import GroupRelDataView, ObjGroupAddView
+from xplugin_grouprel.views import GroupRelDataView, ObjGroupAddView, ObjectDeleteSelected
 
 
 class GroupRelPlugin(BaseAdminPlugin):
@@ -41,11 +41,15 @@ class GroupRelPlugin(BaseAdminPlugin):
         )
 
         model = self.group_m2m_relation.get_model()
-        context['table_model'] = {
+        context['table_object_add'] = {
             'url': self.admin_view.get_model_url(model, "add"),
             'title': _('Add %s') % force_text(model._meta.verbose_name),
             'refresh_url': self.admin_view.get_admin_url("grouprel-groupobj-add",
                                                          pk=self.admin_view.org_obj.pk)
+        }
+        context['table_object_delete'] = {
+            'url': self.admin_view.get_admin_url("grouprel-groupobj-delete"),
+            'title': _("Remove all selected %s") % force_text(model._meta.verbose_name_plural),
         }
         context['table'] = dict(
             instance=self.group_m2m_relation,
@@ -73,13 +77,17 @@ class GroupRelPlugin(BaseAdminPlugin):
             settings.STATIC_URL + "xplugin-grouprel/js/dataTables.buttons.min.js",
             settings.STATIC_URL + "xplugin-grouprel/js/dataTables.select.min.js",
             settings.STATIC_URL + "xplugin-grouprel/js/select.bootstrap.min.js",
-            settings.STATIC_URL + "xplugin-grouprel/js/group.table.handler.js"
+            settings.STATIC_URL + "xplugin-grouprel/js/grouprel.plugin.quick-form.js",
+            settings.STATIC_URL + "xplugin-grouprel/js/group.table.handler.js",
         ))
         return media
 
 
 site.register_view(r'^table/obj/(?P<pk>\d+)/add', ObjGroupAddView,
                    name='grouprel-groupobj-add')
+
+site.register_view(r'^table/obj/delete/$', ObjectDeleteSelected,
+                   name='grouprel-groupobj-delete')
 
 site.register_view(r'^table/(?P<app_label>\w+)/(?P<model_name>\w+)/(?P<pk>\d+)',
                    GroupRelDataView,
