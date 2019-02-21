@@ -66,6 +66,7 @@ class GroupM2MRelation(object):
                     'searchable': getattr(field, 'datatable_searchable', True),
                     'orderable': getattr(field, 'datatable_orderable', True),
                     'visible': getattr(field, 'datatable_visible', True),
+                    'className': getattr(field, 'datatable_class_name', None),
                     'index': index
                 }
             })

@@ -22,6 +22,7 @@
             searchable: {{ column.datatable.searchable|yesno:"true,false" }},
             orderable: {{ column.datatable.orderable|yesno:"true,false" }},
             visible: {{ column.datatable.visible|yesno:"true,false" }},
+            className: {% if column.datatable.className %}"{{ column.datatable.className }}"{% else %}null{% endif %}
         });
         {% endfor %}
     </script>
