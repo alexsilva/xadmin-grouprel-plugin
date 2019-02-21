@@ -40,6 +40,7 @@ class GroupM2MRelationImpl(GroupM2MRelation):
 In the admin model, configure the implemented class:
 ```
 from xplugin_grouprel.plugin import GroupRelPlugin
+from django.contrib.auth.models import Group
 from xadmin import site
 
 class GroupAdmin(object):
