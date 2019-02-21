@@ -18,8 +18,11 @@ In the adminx script, implement the table interface:
 from xplugin_grouprel import GroupM2MRelation
 
 class GroupM2MRelationImpl(GroupM2MRelation):
-    # Group related model
-    model = User.groups.through
+    # modelo intermediate group
+    through = User.groups.through
+    
+    # model related to the group
+    model = User
     
     # Fields that will appear in the data table
     fields = (
