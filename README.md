@@ -1,5 +1,10 @@
-# xadmin-grouprel-plugin
-Xadmin plugin that displays user related to a group (datatable)
+xadmin plugin that displays users related to groups in the edit screen. 
+It is especially useful when the user number is extremely large. 
+User are paginated and loaded with ajax.
+
+Install
+-
+`python -m pip install git+https://github.com/alexsilva/xadmin-grouprel-plugin.git@master`
 
 Setup
 -
