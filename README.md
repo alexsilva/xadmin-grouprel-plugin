@@ -14,11 +14,12 @@ Add the app to installed-apps: `xplugin_grouprel`
 Register the plugin:
 ```
 from xplugin_grouprel.plugin import GroupRelPlugin
+from xadmin import site
 
 site.register_plugin(GroupRelPlugin, UpdateAdminView)
 ```
 
-In the adminx script, implement the table interface:
+In the `adminx.py` script, implement the table interface:
 ```
 from xplugin_grouprel import GroupM2MRelation
 
@@ -39,8 +40,14 @@ class GroupM2MRelationImpl(GroupM2MRelation):
 In the admin model, configure the implemented class:
 ```
 from xplugin_grouprel.plugin import GroupRelPlugin
+from xadmin import site
 
-class ModelGroupAdmin(object):
+class GroupAdmin(object):
     # Activate the plugin in the group admin model
     group_m2m_relation = GroupM2MRelationImpl
+    
+
+# need to register the group again for the plugin to be activated.
+site.unregister(Group)
+site.register(Group, GroupAdmin)
 ```
