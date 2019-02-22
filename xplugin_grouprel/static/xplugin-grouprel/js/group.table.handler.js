@@ -4,7 +4,7 @@
     var table = $('#ajax-table').DataTable({
         dom: 'Blfrtip',
         ajax: {
-            url: grouprel_datatable.ajax.url,
+            url: datatable_config.ajax.url,
             type: "POST",
             beforeSend: function (xhr, settings) {
                 xhr.setRequestHeader("X-CSRFToken", csrftoken);
@@ -19,11 +19,11 @@
         select: {
             style: 'multi'
         },
-        columnDefs: grouprel_datatable.columns_defs,
-        buttons: grouprel_datatable.buttons,
+        columnDefs: datatable_config.columns_defs,
+        buttons: datatable_config.buttons,
         initComplete: function () {
-            if (grouprel_datatable.hasOwnProperty("initComplete")) {
-                grouprel_datatable.initComplete()
+            if (datatable_config.hasOwnProperty("initComplete")) {
+                datatable_config.initComplete()
             }
         },
     });

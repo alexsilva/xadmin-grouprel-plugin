@@ -5,7 +5,7 @@
 
 {% block box_content %}
     <script type="application/javascript">
-        var grouprel_datatable = {
+        var datatable_config = {
             ajax: {
                 url: "{{ ajax_table_url }}"
             },
@@ -23,7 +23,7 @@
             }
         };
         {% for column in table.columns %}
-        grouprel_datatable.columns_defs.push({
+        datatable_config.columns_defs.push({
             targets: {{ column.datatable.index }},
             searchable: {{ column.datatable.searchable|yesno:"true,false" }},
             orderable: {{ column.datatable.orderable|yesno:"true,false" }},
@@ -32,7 +32,7 @@
         });
         {% endfor %}
 
-        grouprel_datatable.buttons = {
+        datatable_config.buttons = {
             buttons: [
                 {
                     tag: "a",
@@ -67,17 +67,17 @@
             ],
         };
 
-        grouprel_datatable.initComplete = function () {
+        datatable_config.initComplete = function () {
             var $button = $("a.btn-ajax-table-add")
-                .attr("title", grouprel_datatable.button.add.title)
-                .attr("href", grouprel_datatable.button.add.url)
-                .attr("data-refresh-url", grouprel_datatable.button.add.refresh_url + "?obj_id=");
+                .attr("title", datatable_config.button.add.title)
+                .attr("href", datatable_config.button.add.url)
+                .attr("data-refresh-url", datatable_config.button.add.refresh_url + "?obj_id=");
             $("div.dt-buttons").find('span').contents().unwrap();
             $button.ajax_addbtn();
 
             $("a.btn-ajax-table-delete")
-                .attr("href", grouprel_datatable.button.delete.url)
-                .attr("title", grouprel_datatable.button.delete.title)
+                .attr("href", datatable_config.button.delete.url)
+                .attr("title", datatable_config.button.delete.title)
         };
     </script>
 
