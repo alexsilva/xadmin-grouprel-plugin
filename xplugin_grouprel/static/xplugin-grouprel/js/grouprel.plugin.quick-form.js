@@ -1,7 +1,7 @@
 ;(function ($) {
 
     $('form.widget-form').on('post-success', function (e, data) {
-        $(this).data('ajaxdelform').clean();
+        $(this).data('ajax_form_modal').clean();
         $('.alert-success #change-link').attr('href', data['change_url']);
         $('.alert-success').show()
     });
@@ -99,34 +99,34 @@
         },
     }
 
-    $.fn.ajaxdelform = function (option) {
+    $.fn.ajax_form_modal = function (option) {
         var args = Array.apply(null, arguments);
         args.shift();
         return this.each(function () {
             var $this = $(this),
-                data = $this.data('ajaxdelform'),
+                data = $this.data('ajax_form_modal'),
                 options = typeof option == 'object' && option;
             if (!data) {
-                $this.data('ajaxdelform', (data = new AjaxForm(this)));
+                $this.data('ajax_form_modal', (data = new AjaxForm(this)));
             }
         });
     };
 
-    $.fn.ajaxdelform.Constructor = AjaxForm;
+    $.fn.ajax_form_modal.Constructor = AjaxForm;
 
     $.fn.exform.renders.push(function (form) {
         if (form.is('.quick-del-form')) {
-            form.ajaxdelform()
+            form.ajax_form_modal()
         }
     })
 
     var QuickAddBtn = function (element, options) {
         this.$btn = $(element);
+        this.options = options || {};
         this.delete_url = this.$btn.attr('href');
         this.$for_input = $('#' + this.$btn.data('for-id'));
         this.$for_wrap = $('#' + this.$btn.data('for-id') + '_wrap_container');
         this.refresh_url = this.$btn.data('refresh-url');
-        this.selected_action = options.selected_action || [];
         this.rendered_form = false;
         this.binit(element, options);
     }
@@ -138,7 +138,7 @@
             var self = this;
 
             if (!this.modal) {
-                this.modal = $('<div class="modal fade quick-del-form" role="dialog"><div class="modal-dialog"><div class="modal-content">' +
+                this.modal = $('<div class="modal fade quick-form-modal" role="dialog"><div class="modal-dialog"><div class="modal-content">' +
                     '<div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h3>' +
                     this.$btn.attr('title') + '</h3></div><div class="modal-body"></div>' +
                     '<div class="modal-footer" style="display: none;"><button class="btn btn-default" data-dismiss="modal" aria-hidden="true">' + gettext('Close') + '</button>' +
@@ -146,13 +146,12 @@
                 $('body').append(this.modal);
             }
             this.modal.find('.modal-body').html('<h2 style="text-align:center;"><i class="fa-spinner fa-spin fa fa-large"></i></h2>');
-            this.modal.find('.modal-body').load(this.delete_url, {
-                    _selected_action: self.selected_action,
-                    csrfmiddlewaretoken: $.getCookie('csrftoken'),
-                },
+            var data = this.options.data || {};
+            data.csrfmiddlewaretoken = $.getCookie('csrftoken');
+            this.modal.find('.modal-body').load(this.delete_url, data,
                 function (form_html, status, xhr) {
                     var form = $(this).find('form');
-                    form.addClass('quick-del-form');
+                    form.addClass('quick-form-modal');
                     form.attr('action', self.delete_url);
                     form.on('post-success', $.proxy(self.post_success, self));
                     form.exform();
@@ -167,15 +166,15 @@
             this.modal.modal();
         },
         post_success: function (e, data) {
-            this.$form.data('ajaxdelform').clean();
+            this.$form.data('ajax_form_modal').clean();
             this.modal.modal('hide');
         }
     }
 
-    $.fn.ajax_delbtn = function (options) {
+    $.fn.ajax_btn_form = function (options) {
         return new QuickAddBtn(this, options || {})
     };
 
-    $.fn.ajax_delbtn.Constructor = QuickAddBtn;
+    $.fn.ajax_btn_form.Constructor = QuickAddBtn;
 
 })(jQuery)
