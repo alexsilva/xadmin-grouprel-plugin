@@ -9,7 +9,11 @@ from xadmin import site
 from xadmin.plugins.utils import get_context_dict
 from xadmin.views import BaseAdminPlugin
 
-from xplugin_grouprel.views import GroupRelDataView, ObjGroupAddView, ObjectDeleteSelected
+from xplugin_grouprel.views import (
+    GroupRelDataView,
+    ObjGroupAddView,
+    ObjectDeleteSelected
+)
 
 
 class GroupRelPlugin(BaseAdminPlugin):
