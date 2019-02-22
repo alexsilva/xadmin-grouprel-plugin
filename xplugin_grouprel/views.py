@@ -1,12 +1,15 @@
 from django.apps import apps
 from django.contrib.auth.models import Group
 from django.core.exceptions import PermissionDenied, ValidationError
+from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models import Q
 from django.http import HttpResponse, JsonResponse
+from django.shortcuts import render
+from django.utils.translation import ugettext as _
 from django_datatables_view.base_datatable_view import BaseDatatableView
 from xadmin.plugins.actions import DeleteSelectedAction
-from xadmin.views import BaseAdminView
+from xadmin.views import BaseAdminView, CommAdminView
 
 
 class ObjectDeleteSelected(DeleteSelectedAction):
@@ -62,6 +65,59 @@ class ObjGroupAddView(BaseAdminView):
         obj.groups.add(group)
 
         return HttpResponse('success')
+
+
+class AjaxFormTableView(CommAdminView):
+    """Displays a table of data related to the group in a modal"""
+    def __init__(self, *args, **kwargs):
+        super(AjaxFormTableView, self).__init__(*args, **kwargs)
+
+        admin_class = self.admin_site._registry.get(Group)
+
+        self.table = admin_class.group_m2m_relation()
+
+    def get_context(self):
+        """Context from table template"""
+        context = super(AjaxFormTableView, self).get_context()
+        context['opts'] = self.table.opts
+        model = self.table.get_model()
+        group_model = self.table.get_group_model()
+        context['box_title'] = _("Add %(objs)s to %(group)s" % {
+            'objs': model._meta.verbose_name_plural,
+            'group': group_model._meta.verbose_name
+        })
+        context['table'] = dict(
+            instance=self.table,
+            columns=self.table.columns,
+            id="group-rel-ajax-table"
+        )
+        context['group'] = dict(pk=self.kwargs['pk'])
+        context['ajax_table_url'] = reverse(
+            '%s:%s' % (self.admin_site.app_name, "grouprel-dataview"),
+            kwargs=dict(app_label=self.table.opts.app_label,
+                        model_name=self.table.opts.model_name,
+                        pk=self.kwargs['pk'])
+        )
+        return context
+
+    def get(self, request, **kwargs):
+        context = self.get_context()
+        return render(request, "xplugin-grouprel/ajax-table.html",
+                      context=context)
+
+    def post(self, request, **kwargs):
+        model = self.table.get_model()
+        if not self.has_model_perm(model, 'change', self.request.user):
+            raise PermissionDenied
+        objs = (request.POST.getlist("objs") or
+                request.POST.getlist("objs" + '[]'))
+        group_model = self.table.get_group_model()
+        group = group_model.objects.get(pk=self.kwargs['pk'])
+        for obj in model.objects.filter(pk__in=objs):
+            obj.add(group)
+        return JsonResponse({
+            'result': 'success'
+        })
 
 
 class GroupRelDataView(BaseDatatableView, BaseAdminView):

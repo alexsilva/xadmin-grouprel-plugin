@@ -1,0 +1,53 @@
+<script type="application/javascript">
+$(function () {
+    datatable_config.buttons = {
+        buttons: [
+            {
+                tag: "a",
+                className: "btn btn-primary btn-sm btn-ajax-table-add",
+                text: "<i class=\"fa fa-plus\"></i>",
+                action: function (e, dt, node, config) {
+                    $('div.modal.quick-form')
+                        .find(".has-error").each(function () {
+                        var $ele = $(this);
+                        $ele.removeClass("has-error");
+                        $ele.parent().find("span[id^=error_]").remove()
+                    })
+                },
+            },
+            {
+                extend: 'selected',
+                className: 'btn btn-danger btn-sm btn-ajax-table-delete',
+                text: "<i class=\"fa fa-trash-o\"></i>",
+                tag: 'a',
+                action: function (e, dt, button, config) {
+                    var rows = dt.rows({selected: true});
+                    var data = rows.data();
+                    var form_config = {
+                        data: {_selected_action: []}
+                    };
+                    for (var index = 0; index < data.length; index++) {
+                        form_config.data._selected_action.push(data[index][0])
+                    }
+                    button.ajax_btn_form_exc(form_config)
+                }
+            },
+        ],
+    };
+
+    datatable_config.initComplete = function () {
+        var $button = $("a.btn-ajax-table-add")
+            .attr("title", "{{ table_object_add.title }}")
+            .attr("href", "{{ table_object_add.url }}")
+            .attr("data-refresh-url", "{{ table_object_add.refresh_url }}?obj_id=");
+        $("div.dt-buttons").find('span').contents().unwrap();
+        $button.ajax_btn_form();
+
+        $("a.btn-ajax-table-delete")
+            .attr("href", "{{ table_object_delete.url }}")
+            .attr("title", "{{ table_object_delete.title }}");
+    };
+
+    $("#{{ table.id }}").create_table(datatable_config);
+});
+</script>

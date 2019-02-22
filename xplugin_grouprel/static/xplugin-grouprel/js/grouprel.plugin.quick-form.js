@@ -115,7 +115,7 @@
     $.fn.ajax_form_modal.Constructor = AjaxForm;
 
     $.fn.exform.renders.push(function (form) {
-        if (form.is('.quick-del-form')) {
+        if (form.is('.quick-form-modal')) {
             form.ajax_form_modal()
         }
     })
@@ -123,7 +123,7 @@
     var QuickAddBtn = function (element, options) {
         this.$btn = $(element);
         this.options = options || {};
-        this.delete_url = this.$btn.attr('href');
+        this.url = this.$btn.attr('href');
         this.$for_input = $('#' + this.$btn.data('for-id'));
         this.$for_wrap = $('#' + this.$btn.data('for-id') + '_wrap_container');
         this.refresh_url = this.$btn.data('refresh-url');
@@ -134,7 +134,17 @@
     QuickAddBtn.prototype = {
         constructor: QuickAddBtn,
 
-        binit: function (element, options) {
+        binit: function(element, options){
+            if (options.bind_click) this.$btn.click($.proxy(this.click, this));
+        },
+
+        click: function(e) {
+            e.stopPropagation();
+            e.preventDefault();
+            this.execute()
+        },
+
+        execute: function () {
             var self = this;
 
             if (!this.modal) {
@@ -146,13 +156,14 @@
                 $('body').append(this.modal);
             }
             this.modal.find('.modal-body').html('<h2 style="text-align:center;"><i class="fa-spinner fa-spin fa fa-large"></i></h2>');
-            var data = this.options.data || {};
-            data.csrfmiddlewaretoken = $.getCookie('csrftoken');
-            this.modal.find('.modal-body').load(this.delete_url, data,
+            var data = this.options.data || null;
+            if (data != null && Object.keys(data).length > 0) { // post
+                data.csrfmiddlewaretoken = $.getCookie('csrftoken');
+            }
+            this.modal.find('.modal-body').load(this.url, data,
                 function (form_html, status, xhr) {
                     var form = $(this).find('form');
                     form.addClass('quick-form-modal');
-                    form.attr('action', self.delete_url);
                     form.on('post-success', $.proxy(self.post_success, self));
                     form.exform();
 
@@ -163,7 +174,14 @@
 
                     self.$form = form
             });
+            this.modal.find('button[data-dismiss="modal"]').click(function () {
+                var data = self.$form.data('ajax_form_modal');
+                if (data && data.hasOwnProperty("clean")) {
+                    data.clean();
+                }
+            });
             this.modal.modal();
+            return this;
         },
         post_success: function (e, data) {
             this.$form.data('ajax_form_modal').clean();
@@ -171,10 +189,21 @@
         }
     }
 
-    $.fn.ajax_btn_form = function (options) {
-        return new QuickAddBtn(this, options || {})
+    $.fn.ajax_btn_form_exc = function (options) {
+        options = options || {};
+        options.bind_click = false;
+        return new QuickAddBtn(this, options).execute()
+    };
+
+    $.fn.ajax_btn_form = function ( option ) {
+        return this.each(function () {
+            var $this = $(this), data = $this.data('ajax_btn_form');
+            if (!data) {
+                $this.data('ajax_btn_form', (data = new QuickAddBtn(this, {bind_click: true})));
+            }
+        });
     };
 
     $.fn.ajax_btn_form.Constructor = QuickAddBtn;
 
-})(jQuery)
+})(jQuery);

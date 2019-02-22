@@ -10,17 +10,6 @@
                 url: "{{ ajax_table_url }}"
             },
             columns_defs: [],
-            button: {
-                add: {
-                    title: "{{ table_object_add.title }}",
-                    url: "{{ table_object_add.url }}",
-                    refresh_url: "{{ table_object_add.refresh_url }}"
-                },
-                delete: {
-                    url: "{{ table_object_delete.url }}",
-                    title: "{{ table_object_delete.title }}",
-                }
-            }
         };
         {% for column in table.columns %}
         datatable_config.columns_defs.push({
@@ -31,59 +20,10 @@
             className: {% if column.datatable.className %}"{{ column.datatable.className }}"{% else %}null{% endif %}
         });
         {% endfor %}
-        {% if not is_ajax %}
-        datatable_config.buttons = {
-            buttons: [
-                {
-                    tag: "a",
-                    className: "btn btn-primary btn-sm btn-ajax-table-add",
-                    text:"<i class=\"fa fa-plus\"></i>",
-                    action: function (e, dt, node, config) {
-                        $('div.modal.quick-form')
-                            .find(".has-error").each(function(){
-                                var $ele = $(this);
-                                $ele.removeClass("has-error");
-                                $ele.parent().find("span[id^=error_]").remove()
-                        })
-                    },
-                },
-                {
-                    extend: 'selected',
-                    className: 'btn btn-danger btn-sm btn-ajax-table-delete',
-                    text: "<i class=\"fa fa-trash-o\"></i>",
-                    tag: 'a',
-                    action: function ( e, dt, button, config ) {
-                        var rows = dt.rows( { selected: true } );
-                        var data = rows.data();
-                        var selected_action = [];
-                        for (var index=0; index < data.length; index++) {
-                             selected_action.push(data[index][0])
-                        }
-                        button.ajax_delbtn({
-                            selected_action: selected_action
-                        })
-                    }
-                },
-            ],
-        };
-        {% endif %}
-        datatable_config.initComplete = function () {
-            {% if not is_ajax %}
-            var $button = $("a.btn-ajax-table-add")
-                .attr("title", datatable_config.button.add.title)
-                .attr("href", datatable_config.button.add.url)
-                .attr("data-refresh-url", datatable_config.button.add.refresh_url + "?obj_id=");
-            $("div.dt-buttons").find('span').contents().unwrap();
-            $button.ajax_addbtn();
-
-            $("a.btn-ajax-table-delete")
-                .attr("href", datatable_config.button.delete.url)
-                .attr("title", datatable_config.button.delete.title);
-            {% endif %}
-        };
     </script>
 
-    <table id="ajax-table" class="table table-striped table-bordered" style="width:100%">
+    {% block table_content %}
+    <table id="{{ table.id }}" class="table table-striped table-bordered" style="width:100%">
         <thead>
             <tr>
                 {% for column in table.columns %}
@@ -92,5 +32,5 @@
             </tr>
         </thead>
     </table>
-
+    {% endblock %}
 {% endblock box_content %}

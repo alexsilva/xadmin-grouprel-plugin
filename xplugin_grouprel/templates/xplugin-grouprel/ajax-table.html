@@ -1,0 +1,19 @@
+{% extends 'xplugin-grouprel/inline-tabular-ajax.html' %}
+{% load staticfiles %}
+
+{% block box_title %}{{ box_title }}{% endblock %}
+
+{% block box_content %}
+    {{ block.super }}
+    <script type="application/javascript">
+        $(function () {
+            $("#{{ table.id }}").create_table(datatable_config);
+        })
+    </script>
+{% endblock %}
+
+{% block table_content %}
+    <form action="{% url "xadmin:grouprel-ajax-table" pk=group.pk %}" method="post">
+    {{ block.super }}
+    </form>
+{% endblock %}

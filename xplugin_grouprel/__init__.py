@@ -24,6 +24,11 @@ class GroupM2MRelation(object):
     def get_model(self):
         return self.model
 
+    @staticmethod
+    def get_group_model():
+        from django.contrib.auth.models import Group
+        return Group
+
     @cached_property
     def map_fields(self):
         fields = collections.OrderedDict()
