@@ -205,5 +205,8 @@ class GroupRelDataView(BaseDatatableView, BaseAdminView):
         if not self.has_model_perm(self.model, 'view', self.request.user):
             raise PermissionDenied
         queryset = self.table.queryset()
-        queryset = queryset.filter(group__pk=self.kwargs['pk'])
+        if self.request.GET.get('reversed'):
+            queryset = queryset.filter(~Q(group__pk=self.kwargs['pk']))
+        else:
+            queryset = queryset.filter(group__pk=self.kwargs['pk'])
         return queryset

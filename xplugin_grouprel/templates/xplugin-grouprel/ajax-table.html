@@ -7,6 +7,7 @@
     {{ block.super }}
     <script type="application/javascript">
         $(function () {
+            datatable_config.ajax.url = datatable_config.ajax.url + "?reversed=1";
             $("#{{ table.id }}").create_table(datatable_config);
         })
     </script>
