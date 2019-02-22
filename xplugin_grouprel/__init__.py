@@ -36,6 +36,13 @@ class GroupM2MRelation(object):
             fields[field] = field_name
         return fields
 
+    def get_first_column(self):
+        for column in self.columns:
+            # search the first visible column
+            if column['datatable']['visible']:
+                return column
+        return None
+
     @cached_property
     def columns(self):
         """Returns a list with verbose_name of the configured fields"""

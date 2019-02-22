@@ -132,10 +132,11 @@ class GroupRelDataView(BaseDatatableView, BaseAdminView):
         self.table = admin_class.group_m2m_relation()
         self.map_fields = self.table.map_fields
         self.columns = self.map_fields.keys()
-        try:
-            self.column_first = self.columns[0]
-        except IndexError:
-            self.column_first = None
+        column = self.table.get_first_column()
+        if column is not None:
+            self.column_first = self.columns[column['datatable']['index']]
+        else:
+            self.column_first = column
         return super(GroupRelDataView, self).initialize(*args, **kwargs)
 
     def get_initial_queryset(self):
