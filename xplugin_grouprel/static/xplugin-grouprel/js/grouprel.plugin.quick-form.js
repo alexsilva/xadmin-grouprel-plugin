@@ -152,7 +152,7 @@
                     '<div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h3>' +
                     this.$btn.attr('title') + '</h3></div><div class="modal-body"></div>' +
                     '<div class="modal-footer" style="display: none;"><button class="btn btn-default" data-dismiss="modal" aria-hidden="true">' + gettext('Close') + '</button>' +
-                    '</div></div></div></div>');
+                    '<a class="btn btn-primary btn-submit">' + gettext("Add") + '</a></div></div></div></div>');
                 $('body').append(this.modal);
             }
             this.modal.find('.modal-body').html('<h2 style="text-align:center;"><i class="fa-spinner fa-spin fa fa-large"></i></h2>');
