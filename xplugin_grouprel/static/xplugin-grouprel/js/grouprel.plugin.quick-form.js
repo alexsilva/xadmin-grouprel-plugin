@@ -57,6 +57,9 @@
                     this.$form.find('.alert-success').hide();
                     if (data['result'] === 'success') {
                         this.$form.trigger('post-success', data);
+                    } else if (data['error']) {
+                        $("div.ajax-form-error").remove();
+                        this.$form.prepend(' <div class="alert alert-danger ajax-form-error">' + data['error'] + "</div>")
                     }
                 }, this))
                 .fail($.proxy(function (xhr) {

@@ -111,6 +111,12 @@ class AjaxFormTableView(CommAdminView):
             raise PermissionDenied
         objs = (request.POST.getlist("objs") or
                 request.POST.getlist("objs" + '[]'))
+        if not objs:
+            return JsonResponse({
+                'result': 'fail',
+                'error': _('select %(objs)s before send data') % {
+                    'objs': model._meta.verbose_name_plural}
+            })
         group_model = self.table.get_group_model()
         group = group_model.objects.get(pk=self.kwargs['pk'])
         for obj in model.objects.filter(pk__in=objs):
