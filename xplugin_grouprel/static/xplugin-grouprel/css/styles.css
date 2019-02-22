@@ -15,3 +15,7 @@ div.dataTables_length {
     position: relative;
     float: left;
 }
+
+.quick-del-form .modal-dialog {
+    width: auto;
+  }
