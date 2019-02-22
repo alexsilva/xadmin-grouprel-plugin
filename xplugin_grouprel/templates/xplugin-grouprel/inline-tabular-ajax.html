@@ -31,7 +31,7 @@
             className: {% if column.datatable.className %}"{{ column.datatable.className }}"{% else %}null{% endif %}
         });
         {% endfor %}
-
+        {% if not is_ajax %}
         datatable_config.buttons = {
             buttons: [
                 {
@@ -66,8 +66,9 @@
                 },
             ],
         };
-
+        {% endif %}
         datatable_config.initComplete = function () {
+            {% if not is_ajax %}
             var $button = $("a.btn-ajax-table-add")
                 .attr("title", datatable_config.button.add.title)
                 .attr("href", datatable_config.button.add.url)
@@ -77,7 +78,8 @@
 
             $("a.btn-ajax-table-delete")
                 .attr("href", datatable_config.button.delete.url)
-                .attr("title", datatable_config.button.delete.title)
+                .attr("title", datatable_config.button.delete.title);
+            {% endif %}
         };
     </script>
 

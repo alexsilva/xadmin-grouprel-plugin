@@ -1,8 +1,7 @@
 (function ($) {
     var csrftoken = $.getCookie('csrftoken');
     var static_url = window.__admin_media_prefix__.replace(/xadmin\/$/i, "xplugin-grouprel/");
-    var table = $('#ajax-table').DataTable({
-        dom: 'Blfrtip',
+    var config = {
         ajax: {
             url: datatable_config.ajax.url,
             type: "POST",
@@ -20,11 +19,15 @@
             style: 'multi'
         },
         columnDefs: datatable_config.columns_defs,
-        buttons: datatable_config.buttons,
         initComplete: function () {
             if (datatable_config.hasOwnProperty("initComplete")) {
                 datatable_config.initComplete()
             }
         },
-    });
+    };
+    if (datatable_config.hasOwnProperty("buttons")) {
+        config.dom = 'Blfrtip';
+        config.buttons = datatable_config.buttons
+    }
+    var table = $('#ajax-table').DataTable(config);
 })(jQuery);

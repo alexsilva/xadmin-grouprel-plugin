@@ -37,6 +37,7 @@ class GroupRelPlugin(BaseAdminPlugin):
     def get_context(self, context):
         """Context from table template"""
         context['opts'] = self.group_m2m_relation.opts
+        context['is_ajax'] = self.admin_view.request.is_ajax()
         context['ajax_table_url'] = self.admin_view.get_admin_url(
             "grouprel-dataview",
             app_label=self.group_m2m_relation.opts.app_label,
