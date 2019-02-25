@@ -243,7 +243,8 @@ class GroupRelDataView(BaseDatatableView, BaseAdminView):
         return super(GroupRelDataView, self).initialize(*args, **kwargs)
 
     def get_initial_queryset(self):
-        if not self.has_model_perm(self.model, 'view', self.request.user):
+        if not self.has_model_perm(self.table.get_model(), 'view',
+                                   self.request.user):
             raise PermissionDenied
         queryset = self.table.queryset()
         if self.request.GET.get('reversed'):

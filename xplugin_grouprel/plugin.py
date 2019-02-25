@@ -31,7 +31,9 @@ class GroupRelPlugin(BaseAdminPlugin):
 
         return bool(self.group_m2m_relation is not None
                     and inspect.isclass(model)
-                    and issubclass(model, self.group_m2m_relation.get_group_model()))
+                    and issubclass(model, self.group_m2m_relation.get_group_model())
+                    and self.has_model_perm(self.group_m2m_relation.get_model(), 'view',
+                                            self.admin_view.request.user))
 
     def get_context(self, context):
         """Context from table template"""
