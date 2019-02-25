@@ -1,7 +1,6 @@
 import inspect
 
 from django.conf import settings
-from django.contrib.auth.models import Group
 from django.template.loader import render_to_string
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext as _
@@ -11,8 +10,7 @@ from xadmin.views import BaseAdminPlugin
 
 from xplugin_grouprel.views import (
     GroupRelDataView,
-    ObjGroupAddView,
-    ObjectDeleteSelected,
+    AjaxObjsGroupRemove,
     AjaxTableObjsGroupView
 )
 
@@ -53,13 +51,12 @@ class GroupRelPlugin(BaseAdminPlugin):
         context['table_object_add'] = {
             'url': self.admin_view.get_admin_url("grouprel-ajax-table",
                                                  pk=self.admin_view.org_obj.pk),
-            'title': _('Add %s') % force_text(model._meta.verbose_name),
-            'refresh_url': self.admin_view.get_admin_url("grouprel-groupobj-add",
-                                                         pk=self.admin_view.org_obj.pk)
+            'title': _('Add %s') % force_text(model._meta.verbose_name)
         }
-        context['table_object_delete'] = {
-            'url': self.admin_view.get_admin_url("grouprel-groupobj-remove"),
-            'title': _("Remove all selected %s") % force_text(model._meta.verbose_name_plural),
+        context['table_object_remove'] = {
+            'url': self.admin_view.get_admin_url("grouprel-objs-remove",
+                                                 pk=self.admin_view.org_obj.pk),
+            'title': _("Remove all selected %s ?") % force_text(model._meta.verbose_name_plural),
         }
         return context
 
@@ -98,11 +95,8 @@ class GroupRelPlugin(BaseAdminPlugin):
 site.register_view(r'^table/ajax/(?P<pk>\d+)/$', AjaxTableObjsGroupView,
                    name='grouprel-ajax-table')
 
-site.register_view(r'^table/obj/(?P<pk>\d+)/add', ObjGroupAddView,
-                   name='grouprel-groupobj-add')
-
-site.register_view(r'^table/objs/remove/$', ObjectDeleteSelected,
-                   name='grouprel-groupobj-remove')
+site.register_view(r'^table/objs/(?P<pk>\d+)/remove/$', AjaxObjsGroupRemove,
+                   name='grouprel-objs-remove')
 
 site.register_view(r'^table/(?P<app_label>\w+)/(?P<model_name>\w+)/(?P<pk>\d+)',
                    GroupRelDataView,

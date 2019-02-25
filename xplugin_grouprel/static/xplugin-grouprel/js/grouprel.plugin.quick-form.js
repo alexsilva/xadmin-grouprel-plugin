@@ -149,6 +149,18 @@
             this.execute()
         },
 
+        get_btn_submit: function() {
+            switch (this.options.btn_submit_type || "default") {
+                case "remove":
+                    return '<a class="btn btn-danger btn-submit">' +
+                           '<i class="fa fa-trash-o"></i>&nbsp' +
+                            gettext("Remove") +
+                            '</a>';
+                default:
+                    return '<a class="btn btn-primary btn-submit">' + gettext("Add") + '</a>'
+
+            }
+        },
         execute: function () {
             var self = this;
 
@@ -157,7 +169,7 @@
                     '<div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h3>' +
                     this.$btn.attr('title') + '</h3></div><div class="modal-body"></div>' +
                     '<div class="modal-footer" style="display: none;"><button class="btn btn-default" data-dismiss="modal" aria-hidden="true">' + gettext('Close') + '</button>' +
-                    '<a class="btn btn-primary btn-submit">' + gettext("Add") + '</a></div></div></div></div>');
+                    this.get_btn_submit() + '</div></div></div></div>');
                 $('body').append(this.modal);
             }
             this.modal.find('.modal-body').html('<h2 style="text-align:center;"><i class="fa-spinner fa-spin fa fa-large"></i></h2>');
@@ -191,6 +203,9 @@
         post_success: function (e, data) {
             this.$form.data('ajax_form_modal').clean();
             this.modal.modal('hide');
+            if (this.options.post_success) {
+                this.options.post_success(data);
+            }
         }
     }
 

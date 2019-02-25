@@ -67,6 +67,47 @@ class ObjGroupAddView(BaseAdminView):
         return HttpResponse('success')
 
 
+class AjaxObjsGroupRemove(CommAdminView):
+
+    def __init__(self, *args, **kwargs):
+        super(AjaxObjsGroupRemove, self).__init__(*args, **kwargs)
+
+        admin_class = self.admin_site._registry.get(Group)
+
+        self.table = admin_class.group_m2m_relation()
+
+    def get_context(self):
+        context = super(AjaxObjsGroupRemove, self).get_context()
+        context['group'] = dict(pk=self.kwargs['pk'])
+        return context
+
+    def post(self, request, **kwargs):
+        objs = (request.POST.getlist("objs") or
+                request.POST.getlist("objs" + '[]'))
+        model = self.table.get_model()
+        if not self.has_model_perm(model, 'change', self.request.user):
+            raise PermissionDenied
+        if not objs:
+            return JsonResponse({
+                'result': 'fail',
+                'error': _('select %(objs)s before send data') % {
+                    'objs': model._meta.verbose_name_plural}
+            })
+        context = self.get_context()
+        queryset = model.objects.filter(pk__in=objs)
+        if request.POST.get('post'):
+            group_model = self.table.get_group_model()
+            group = group_model.objects.get(pk=self.kwargs['pk'])
+            for obj in queryset:
+                obj.groups.remove(group)
+            return JsonResponse({
+                'result': 'success'
+            })
+        else:
+            context['objs'] = queryset
+        return render(request, "xplugin-grouprel/ajax-objs-remove.html", context=context)
+
+
 class AjaxTableObjsGroupView(CommAdminView):
     """Displays a table of data related to the group in a modal"""
     def __init__(self, *args, **kwargs):

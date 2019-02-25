@@ -1,0 +1,11 @@
+<div class="container-fluid">
+<form action="{% url 'xadmin:grouprel-objs-remove' pk=group.pk %}">
+<ul class="list-group">
+    {% for obj in objs %}
+        <li class="list-group-item">{{ obj }}</li>
+        <input type="hidden" name="objs" value="{{ obj.pk }}">
+        <input type="hidden" name="post" value="1">
+    {% endfor %}
+</ul>
+</form>
+</div>
