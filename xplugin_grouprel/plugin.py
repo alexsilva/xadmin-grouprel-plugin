@@ -13,7 +13,8 @@ from xplugin_grouprel.views import (
     GroupRelDataView,
     ObjGroupAddView,
     ObjectDeleteSelected,
-    AjaxFormTableView)
+    AjaxTableObjsGroupView
+)
 
 
 class GroupRelPlugin(BaseAdminPlugin):
@@ -57,7 +58,7 @@ class GroupRelPlugin(BaseAdminPlugin):
                                                          pk=self.admin_view.org_obj.pk)
         }
         context['table_object_delete'] = {
-            'url': self.admin_view.get_admin_url("grouprel-groupobj-delete"),
+            'url': self.admin_view.get_admin_url("grouprel-groupobj-remove"),
             'title': _("Remove all selected %s") % force_text(model._meta.verbose_name_plural),
         }
         return context
@@ -94,14 +95,14 @@ class GroupRelPlugin(BaseAdminPlugin):
         return media
 
 
-site.register_view(r'^table/ajax/(?P<pk>\d+)/$', AjaxFormTableView,
+site.register_view(r'^table/ajax/(?P<pk>\d+)/$', AjaxTableObjsGroupView,
                    name='grouprel-ajax-table')
 
 site.register_view(r'^table/obj/(?P<pk>\d+)/add', ObjGroupAddView,
                    name='grouprel-groupobj-add')
 
-site.register_view(r'^table/obj/delete/$', ObjectDeleteSelected,
-                   name='grouprel-groupobj-delete')
+site.register_view(r'^table/objs/remove/$', ObjectDeleteSelected,
+                   name='grouprel-groupobj-remove')
 
 site.register_view(r'^table/(?P<app_label>\w+)/(?P<model_name>\w+)/(?P<pk>\d+)',
                    GroupRelDataView,

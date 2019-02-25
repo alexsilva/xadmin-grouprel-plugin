@@ -67,10 +67,10 @@ class ObjGroupAddView(BaseAdminView):
         return HttpResponse('success')
 
 
-class AjaxFormTableView(CommAdminView):
+class AjaxTableObjsGroupView(CommAdminView):
     """Displays a table of data related to the group in a modal"""
     def __init__(self, *args, **kwargs):
-        super(AjaxFormTableView, self).__init__(*args, **kwargs)
+        super(AjaxTableObjsGroupView, self).__init__(*args, **kwargs)
 
         admin_class = self.admin_site._registry.get(Group)
 
@@ -78,7 +78,7 @@ class AjaxFormTableView(CommAdminView):
 
     def get_context(self):
         """Context from table template"""
-        context = super(AjaxFormTableView, self).get_context()
+        context = super(AjaxTableObjsGroupView, self).get_context()
         context['opts'] = self.table.opts
         model = self.table.get_model()
         group_model = self.table.get_group_model()
