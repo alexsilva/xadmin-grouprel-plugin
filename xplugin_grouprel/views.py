@@ -120,7 +120,7 @@ class AjaxFormTableView(CommAdminView):
         group_model = self.table.get_group_model()
         group = group_model.objects.get(pk=self.kwargs['pk'])
         for obj in model.objects.filter(pk__in=objs):
-            obj.add(group)
+            obj.groups.add(group)
         return JsonResponse({
             'result': 'success'
         })

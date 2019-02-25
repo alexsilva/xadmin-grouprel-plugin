@@ -30,6 +30,8 @@
             config.dom = 'Blfrtip';
             config.buttons = datatable_config.buttons
         }
-        return this.DataTable(config)
+        var table = this.DataTable(config);
+        this.data("table", table);
+        return table;
     }
 })(jQuery);

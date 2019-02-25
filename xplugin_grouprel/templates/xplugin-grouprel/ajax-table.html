@@ -8,13 +8,27 @@
     <script type="application/javascript">
         $(function () {
             datatable_config.ajax.url = datatable_config.ajax.url + "?reversed=1";
-            $("#{{ table.id }}").create_table(datatable_config);
-        })
+            var table = $("#{{ table.id }}").create_table(datatable_config);
+            $('#form-ajax-objs-add').on('form-save', function (evt, form_data) {
+                var rows = table.rows({selected: true});
+                var data = rows.data();
+                for (var index = 0; index < data.length; index++) {
+                    form_data.append("objs", data[index][0])
+                }
+            }).on("post-success", function(evt, data){
+                $('table.table').each(function (item) {
+                    var table = $(this).data("table");
+                    if (table && Object.keys(table).length > 0) {
+                        table.ajax.reload();
+                    }
+                });
+            });
+        });
     </script>
 {% endblock %}
 
 {% block table_content %}
-    <form action="{% url "xadmin:grouprel-ajax-table" pk=group.pk %}" method="post">
-    {{ block.super }}
+    <form id="form-ajax-objs-add" action="{% url "xadmin:grouprel-ajax-table" pk=group.pk %}" method="post">
+        {{ block.super }}
     </form>
 {% endblock %}

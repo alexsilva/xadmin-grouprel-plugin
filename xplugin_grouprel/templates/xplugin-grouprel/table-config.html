@@ -36,16 +36,18 @@ $(function () {
     };
 
     datatable_config.initComplete = function () {
-        var $button = $("a.btn-ajax-table-add")
+        $("a.btn-ajax-table-add")
             .attr("title", "{{ table_object_add.title }}")
             .attr("href", "{{ table_object_add.url }}")
-            .attr("data-refresh-url", "{{ table_object_add.refresh_url }}?obj_id=");
-        $("div.dt-buttons").find('span').contents().unwrap();
-        $button.ajax_btn_form();
+            .attr("data-refresh-url", "{{ table_object_add.refresh_url }}?obj_id=")
+            .ajax_btn_form();
 
         $("a.btn-ajax-table-delete")
             .attr("href", "{{ table_object_delete.url }}")
-            .attr("title", "{{ table_object_delete.title }}");
+            .attr("title", "{{ table_object_delete.title }}")
+            .ajax_btn_form();
+
+        $("div.dt-buttons").find('span').contents().unwrap();
     };
 
     $("#{{ table.id }}").create_table(datatable_config);

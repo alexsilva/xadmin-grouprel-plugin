@@ -79,6 +79,8 @@
 
             var formData = new FormData();
 
+            this.$form.trigger('form-save', formData);
+
             $nonfile_input.forEach(function (field) {
                 formData.append(field.name, field.value)
             });
@@ -198,11 +200,13 @@
         return new QuickAddBtn(this, options).execute()
     };
 
-    $.fn.ajax_btn_form = function ( option ) {
+    $.fn.ajax_btn_form = function ( options ) {
         return this.each(function () {
             var $this = $(this), data = $this.data('ajax_btn_form');
             if (!data) {
-                $this.data('ajax_btn_form', (data = new QuickAddBtn(this, {bind_click: true})));
+                options = options || {};
+                options.bind_click = true;
+                $this.data('ajax_btn_form', (data = new QuickAddBtn(this, options)));
             }
         });
     };
