@@ -1,4 +1,5 @@
-div#group-rel-table_wrapper {
+div#group-rel-table_wrapper,
+div#group-rel-ajax-table_wrapper {
     margin-top: 5px;
 }
 
