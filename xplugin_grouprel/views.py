@@ -223,7 +223,9 @@ class GroupRelDataView(BaseDatatableView, BaseAdminView):
             value = unicode(getattr(obj, column))
             field = self.table.opts.get_field(column)
 
-        if self.column_first == column and value and field and isinstance(field, models.ForeignKey):
+        if self.column_first == column and value and field and \
+                isinstance(field, models.ForeignKey) and \
+                self.has_model_perm(field.rel.to, 'change', self.request.user):
             change_url = self.get_model_url(field.rel.to, 'change',
                                             getattr(obj, field.name).pk)
             return u'<a href="%s">%s</a>' % (change_url, value)
