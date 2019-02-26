@@ -132,6 +132,8 @@ class AjaxTableObjsGroupView(CommAdminView):
             columns=self.table.columns,
             id="group-rel-ajax-table"
         )
+        context['inline_style'] = 'blank'
+        context['prefix'] = context['table']['id']
         context['group'] = dict(pk=self.kwargs['pk'])
         context['ajax_table_url'] = reverse(
             '%s:%s' % (self.admin_site.app_name, "grouprel-dataview"),

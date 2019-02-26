@@ -43,6 +43,9 @@ class GroupRelPlugin(BaseAdminPlugin):
             columns=self.group_m2m_relation.columns,
             id="group-rel-table"
         )
+        context['group'] = dict(pk=self.admin_view.org_obj.pk)
+        context['prefix'] = context['table']['id']
+        context['inline_style'] = 'blank'
         context['ajax_table_url'] = self.admin_view.get_admin_url(
             "grouprel-dataview",
             app_label=self.group_m2m_relation.opts.app_label,
