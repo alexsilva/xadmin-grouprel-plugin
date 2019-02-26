@@ -9,8 +9,8 @@ class GroupRelatedModel(object):
     model = None  # model related to the group
     fields = ()
 
-    def __init__(self, plugin=None):
-        self.plugin = plugin
+    def __init__(self, admin_view=None):
+        self.admin_view = admin_view
 
     @cached_property
     def opts(self):

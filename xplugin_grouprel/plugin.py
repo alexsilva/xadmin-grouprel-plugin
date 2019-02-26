@@ -27,7 +27,7 @@ class GroupRelPlugin(BaseAdminPlugin):
                                        self.group_rel_model)
 
         if inspect.isclass(self.group_rel_model):
-            self.group_rel_model = self.group_rel_model(self)
+            self.group_rel_model = self.group_rel_model(self.admin_view)
 
         return bool(self.group_rel_model is not None
                     and inspect.isclass(model)

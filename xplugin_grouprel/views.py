@@ -20,7 +20,7 @@ class ObjectDeleteSelected(DeleteSelectedAction):
     def __init__(self, *args, **kwargs):
         admin_class = self.admin_site._registry.get(Group)
 
-        table = admin_class.group_rel_model()
+        table = admin_class.group_rel_model(self)
         self.model = table.get_model()
 
         super(ObjectDeleteSelected, self).__init__(*args, **kwargs)
@@ -47,7 +47,7 @@ class ObjGroupAddView(BaseAdminView):
             raise PermissionDenied
 
         admin_class = self.admin_site._registry.get(Group)
-        table = admin_class.group_rel_model()
+        table = admin_class.group_rel_model(self)
         model = table.get_model()
 
         # check add perm
@@ -75,7 +75,7 @@ class AjaxObjsGroupRemove(CommAdminView):
 
         admin_class = self.admin_site._registry.get(Group)
 
-        self.table = admin_class.group_rel_model()
+        self.table = admin_class.group_rel_model(self)
 
     def get_context(self):
         context = super(AjaxObjsGroupRemove, self).get_context()
@@ -116,7 +116,7 @@ class AjaxTableObjsGroupView(CommAdminView):
 
         admin_class = self.admin_site._registry.get(Group)
 
-        self.table = admin_class.group_rel_model()
+        self.table = admin_class.group_rel_model(self)
 
     def get_context(self):
         """Context from table template"""
@@ -237,7 +237,7 @@ class GroupRelDataView(BaseDatatableView, BaseAdminView):
 
         admin_class = self.admin_site._registry.get(Group)
 
-        self.table = admin_class.group_rel_model()
+        self.table = admin_class.group_rel_model(self)
         self.map_fields = self.table.map_fields
         self.columns = self.map_fields.keys()
         column = self.table.get_first_column()
