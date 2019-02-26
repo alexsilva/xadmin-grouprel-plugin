@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-26 10:58-0300\n"
+"POT-Creation-Date: 2019-02-26 16:05-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,14 +18,27 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
+#: .\xplugin_grouprel\static\xplugin-grouprel\js\group.table.plugin.js:17
+#, javascript-format
+msgid "%d rows selected"
+msgstr "%d itens selecionados"
+
+#: .\xplugin_grouprel\static\xplugin-grouprel\js\group.table.plugin.js:18
+msgid "Click a row to select it"
+msgstr "Clique para selecionar itens"
+
+#: .\xplugin_grouprel\static\xplugin-grouprel\js\group.table.plugin.js:19
+msgid "1 row selected"
+msgstr "1 item selecionado"
+
 #: .\xplugin_grouprel\static\xplugin-grouprel\js\grouprel.plugin.quick-form.js:157
 msgid "Remove"
 msgstr "Remover"
 
-#: .\xplugin_grouprel\static\xplugin-grouprel\js\grouprel.plugin.quick-form.js:160
+#: .\xplugin_grouprel\static\xplugin-grouprel\js\grouprel.plugin.quick-form.js:162
 msgid "Add"
 msgstr "Adicionar"
 
-#: .\xplugin_grouprel\static\xplugin-grouprel\js\grouprel.plugin.quick-form.js:171
+#: .\xplugin_grouprel\static\xplugin-grouprel\js\grouprel.plugin.quick-form.js:174
 msgid "Close"
 msgstr "Fechar"

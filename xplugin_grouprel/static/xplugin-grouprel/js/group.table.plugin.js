@@ -11,7 +11,14 @@
                 }
             },
             language: {
-                url: static_url + window.__admin_language_code__ + ".json"
+                url: static_url + window.__admin_language_code__ + ".json",
+                select: {
+                rows: {
+                    _: gettext("%d rows selected"),
+                    0: gettext("Click a row to select it"),
+                    1: gettext("1 row selected")
+                }
+                }
             },
             scrollX: true,
             processing: true,
