@@ -1,3 +1,4 @@
+import six
 from django.apps import apps
 from django.contrib.auth.models import Group
 from django.core.exceptions import PermissionDenied, ValidationError
@@ -212,11 +213,12 @@ class GroupRelDataView(BaseDatatableView, BaseAdminView):
             field = db_column = None
 
         if field is None and hasattr(self.table, column_val):
-            value = getattr(self.table, column_val)(obj)
+            method = getattr(self.table, column_val)
+            value = method(obj)
             try:
-                field = self.table.opts.get_field(column)
+                field = getattr(method, "admin_order_field")
             except models.FieldDoesNotExist:
-                field = None
+                field = self.table.opts.get_field(column)
         elif isinstance(field, models.ForeignKey):
             value = reduce(lambda x, y: getattr(x, y), [obj, field.name, db_column])
         else:
@@ -224,10 +226,9 @@ class GroupRelDataView(BaseDatatableView, BaseAdminView):
             field = self.table.opts.get_field(column)
 
         if self.column_first == column and value and field and \
-                isinstance(field, models.ForeignKey) and \
-                self.has_model_perm(field.rel.to, 'change', self.request.user):
-            change_url = self.get_model_url(field.rel.to, 'change',
-                                            getattr(obj, field.name).pk)
+                self.has_model_perm(self.table.get_model(), 'change', self.request.user):
+            field_name = getattr(obj, field if isinstance(field, six.string_types) else field.name)
+            change_url = self.get_model_url(self.table.get_model(), 'change', field_name)
             return u'<a href="{0}">{1}</a>'.format(change_url, value)
         return value
 
@@ -252,7 +253,7 @@ class GroupRelDataView(BaseDatatableView, BaseAdminView):
             raise PermissionDenied
         queryset = self.table.queryset()
         if self.request.GET.get('reversed'):
-            queryset = queryset.filter(~Q(group__pk=self.kwargs['pk']))
+            queryset = queryset.exclude(groups__pk=self.kwargs['pk'])
         else:
-            queryset = queryset.filter(group__pk=self.kwargs['pk'])
+            queryset = queryset.filter(groups__pk=self.kwargs['pk'])
         return queryset

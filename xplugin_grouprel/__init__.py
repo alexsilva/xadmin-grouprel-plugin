@@ -6,7 +6,6 @@ import collections
 
 class GroupM2MRelation(object):
     """interface class"""
-    through = None  # intermediate table
     model = None  # model related to the group
     fields = ()
 
@@ -15,11 +14,11 @@ class GroupM2MRelation(object):
 
     @cached_property
     def opts(self):
-        return self.through._meta
+        return self.model._meta
 
     def queryset(self):
         """main queryset"""
-        return self.through.objects.all()
+        return self.model.objects.all()
 
     def get_model(self):
         return self.model
