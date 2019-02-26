@@ -1,50 +1,49 @@
 <script type="application/javascript">
 $(function () {
-    datatable_config.buttons = {
-        buttons: [
-            {
-                tag: "a",
-                className: "btn btn-primary btn-sm btn-ajax-table-add",
-                text: "<i class=\"fa fa-plus\"></i>",
-                action: function (e, dt, node, config) {
-                    $('div.modal.quick-form')
-                        .find(".has-error").each(function () {
-                        var $ele = $(this);
-                        $ele.removeClass("has-error");
-                        $ele.parent().find("span[id^=error_]").remove()
-                    })
-                },
-            },
-            {
-                extend: 'selected',
-                className: 'btn btn-danger btn-sm btn-ajax-table-remove',
-                text: "<i class=\"fa fa-trash-o\"></i>",
-                tag: 'a',
-                action: function (e, dt, button, config) {
-                    var rows = dt.rows({selected: true});
-                    var data = rows.data();
-                    var objs = [];
-                    for (var index = 0; index < data.length; index++) {
-                        objs.push(data[index][0])
-                    }
-                    button.ajax_btn_form_exc({
-                        data: {objs: objs},
-                        btn_submit_type: "remove",
-                        post_success: function (data) {
-                            $('table.table').each(function (index) {
-                                var table = $(this).data("table");
-                                if (table && Object.keys(table).length > 0) {
-                                    table.ajax.reload();
-                                }
-                            });
+    datatable_config.buttons = {buttons: []};
+    {% if has_group_rel_change_perm %}
+    datatable_config.buttons.buttons.push({
+        tag: "a",
+        className: "btn btn-primary btn-sm btn-ajax-table-add",
+        text: "<i class=\"fa fa-plus\"></i>",
+        action: function (e, dt, node, config) {
+            $('div.modal.quick-form')
+                .find(".has-error").each(function () {
+                var $ele = $(this);
+                $ele.removeClass("has-error");
+                $ele.parent().find("span[id^=error_]").remove()
+            })
+        },
+    });
+    datatable_config.buttons.buttons.push({
+        extend: 'selected',
+        className: 'btn btn-danger btn-sm btn-ajax-table-remove',
+        text: "<i class=\"fa fa-trash-o\"></i>",
+        tag: 'a',
+        action: function (e, dt, button, config) {
+            var rows = dt.rows({selected: true});
+            var data = rows.data();
+            var objs = [];
+            for (var index = 0; index < data.length; index++) {
+                objs.push(data[index][0])
+            }
+            button.ajax_btn_form_exc({
+                data: {objs: objs},
+                btn_submit_type: "remove",
+                post_success: function (data) {
+                    $('table.table').each(function (index) {
+                        var table = $(this).data("table");
+                        if (table && Object.keys(table).length > 0) {
+                            table.ajax.reload();
                         }
-                    })
+                    });
                 }
-            },
-        ],
-    };
-
+            })
+        }
+    });
+    {% endif %}
     datatable_config.initComplete = function () {
+        {% if has_group_rel_change_perm %}
         $("a.btn-ajax-table-add")
             .attr("title", "{{ table_object_add.title }}")
             .attr("href", "{{ table_object_add.url }}")
@@ -53,6 +52,7 @@ $(function () {
         $("a.btn-ajax-table-remove")
             .attr("href", "{{ table_object_remove.url }}")
             .attr("title", "{{ table_object_remove.title }}");
+        {% endif %}
 
         $("div.dt-buttons").find('span').contents().unwrap();
     };

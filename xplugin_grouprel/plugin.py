@@ -46,6 +46,9 @@ class GroupRelPlugin(BaseAdminPlugin):
         context['group'] = dict(pk=self.admin_view.org_obj.pk)
         context['prefix'] = context['table']['id']
         context['inline_style'] = 'blank'
+        context['has_group_rel_change_perm'] = \
+            self.has_model_perm(self.group_m2m_relation.get_model(), 'change',
+                                self.admin_view.request.user)
         context['ajax_table_url'] = self.admin_view.get_admin_url(
             "grouprel-dataview",
             app_label=self.group_m2m_relation.opts.app_label,
