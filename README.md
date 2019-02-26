@@ -29,9 +29,19 @@ class GroupRelatedModelImpl(GroupRelatedModel):
     
     # Fields that will appear in the data table
     fields = (
+        'resolve_field_user_pk',
         'username',
         'email'
     )
+    
+    # this is a custom field
+    def resolve_field_user_pk(self, instance):
+        return instance.pk
+    resolve_field_user_pk.verbose_name = u"hidden-user-pk"
+    resolve_field_user_pk.datatable_visible = False
+    resolve_field_user_pk.datatable_searchable = False
+    resolve_field_user_pk.datatable_orderable = False
+    resolve_field_user_pk.admin_order_field = "id"
 ```
 
 In the admin model, configure the implemented class:
