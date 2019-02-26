@@ -1,8 +1,8 @@
 <script type="application/javascript">
 $(function () {
-    datatable_config.buttons = {buttons: []};
+    datatable_config.buttons = [];
     {% if has_group_rel_change_perm %}
-    datatable_config.buttons.buttons.push({
+    datatable_config.buttons.push({
         tag: "a",
         className: "btn btn-primary btn-sm btn-ajax-table-add",
         text: "<i class=\"fa fa-plus\"></i>",
@@ -15,7 +15,7 @@ $(function () {
             })
         },
     });
-    datatable_config.buttons.buttons.push({
+    datatable_config.buttons.push({
         extend: 'selected',
         className: 'btn btn-danger btn-sm btn-ajax-table-remove',
         text: "<i class=\"fa fa-trash-o\"></i>",
