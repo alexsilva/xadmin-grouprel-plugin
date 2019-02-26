@@ -228,7 +228,7 @@ class GroupRelDataView(BaseDatatableView, BaseAdminView):
                 self.has_model_perm(field.rel.to, 'change', self.request.user):
             change_url = self.get_model_url(field.rel.to, 'change',
                                             getattr(obj, field.name).pk)
-            return u'<a href="%s">%s</a>' % (change_url, value)
+            return u'<a href="{0}">{1}</a>'.format(change_url, value)
         return value
 
     def initialize(self, *args, **kwargs):
