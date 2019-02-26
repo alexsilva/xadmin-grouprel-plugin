@@ -1,0 +1,67 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-02-26 10:04-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: .\xplugin_grouprel\plugin.py:56
+#, python-format
+msgid "Add %s"
+msgstr "Adicionar %s"
+
+#: .\xplugin_grouprel\plugin.py:61
+#, python-format
+msgid "Remove all selected %s ?"
+msgstr "Remover todos os %s selecionados ?"
+
+#: .\xplugin_grouprel\templates\xplugin-grouprel\model-delete-selected-confirm.html:10
+#, python-format
+msgid ""
+"Deleting the selected %(objects_name)s would result in deleting related "
+"objects,\n"
+"                    but your account doesn't have permission to delete the "
+"following types of objects:\n"
+"                "
+msgstr ""
+
+#: .\xplugin_grouprel\templates\xplugin-grouprel\model-delete-selected-confirm.html:22
+#, python-format
+msgid ""
+"Deleting the selected %(objects_name)s would require deleting then following "
+"protected related objects:"
+msgstr ""
+
+#: .\xplugin_grouprel\templates\xplugin-grouprel\model-delete-selected-confirm.html:32
+#, python-format
+msgid ""
+"Are you sure you want to delete the selected %(objects_name)s? All of the "
+"following objects and their related items will be deleted:"
+msgstr ""
+
+#: .\xplugin_grouprel\templates\xplugin-grouprel\model-delete-selected-confirm.html:48
+msgid "Yes, I'm sure"
+msgstr "Sim, estou certo"
+
+#: .\xplugin_grouprel\views.py:93 .\xplugin_grouprel\views.py:158
+#, python-format
+msgid "Select %(objs)s before send data"
+msgstr "Selecione %(objs)s antes de enviar dados"
+
+#: .\xplugin_grouprel\views.py:126
+#, python-format
+msgid "Add %(objs)s to %(group)s"
+msgstr "Adicionar %(objs)s ao %(group)s"

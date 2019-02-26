@@ -90,7 +90,7 @@ class AjaxObjsGroupRemove(CommAdminView):
         if not objs:
             return JsonResponse({
                 'result': 'fail',
-                'error': _('select %(objs)s before send data') % {
+                'error': _('Select %(objs)s before send data') % {
                     'objs': model._meta.verbose_name_plural}
             })
         context = self.get_context()
@@ -123,10 +123,10 @@ class AjaxTableObjsGroupView(CommAdminView):
         context['opts'] = self.table.opts
         model = self.table.get_model()
         group_model = self.table.get_group_model()
-        context['box_title'] = _("Add %(objs)s to %(group)s" % {
+        context['box_title'] = _("Add %(objs)s to %(group)s") % {
             'objs': model._meta.verbose_name_plural,
             'group': group_model._meta.verbose_name
-        })
+        }
         context['table'] = dict(
             instance=self.table,
             columns=self.table.columns,
@@ -155,7 +155,7 @@ class AjaxTableObjsGroupView(CommAdminView):
         if not objs:
             return JsonResponse({
                 'result': 'fail',
-                'error': _('select %(objs)s before send data') % {
+                'error': _('Select %(objs)s before send data') % {
                     'objs': model._meta.verbose_name_plural}
             })
         group_model = self.table.get_group_model()
