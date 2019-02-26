@@ -157,7 +157,10 @@
                             gettext("Remove") +
                             '</a>';
                 default:
-                    return '<a class="btn btn-primary btn-submit">' + gettext("Add") + '</a>'
+                    return '<a class="btn btn-primary btn-submit">' +
+                        '<i class="fa fa-plus"></i>&nbsp' +
+                        gettext("Add") +
+                        '</a>'
 
             }
         },
