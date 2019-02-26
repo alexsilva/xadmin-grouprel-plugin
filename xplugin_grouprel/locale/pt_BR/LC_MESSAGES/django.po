@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-26 10:04-0300\n"
+"POT-Creation-Date: 2019-02-26 12:14-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,15 +18,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: .\xplugin_grouprel\plugin.py:56
+#: .\xplugin_grouprel\plugin.py:63
 #, python-format
 msgid "Add %s"
 msgstr "Adicionar %s"
 
-#: .\xplugin_grouprel\plugin.py:61
+#: .\xplugin_grouprel\plugin.py:68
 #, python-format
-msgid "Remove all selected %s ?"
-msgstr "Remover todos os %s selecionados ?"
+msgid "Remove all selected %(objs)s from %(group)s ?"
+msgstr "Remover todos %(objs)s selecionados do %(group)s ?"
 
 #: .\xplugin_grouprel\templates\xplugin-grouprel\model-delete-selected-confirm.html:10
 #, python-format
@@ -56,7 +56,7 @@ msgstr ""
 msgid "Yes, I'm sure"
 msgstr "Sim, estou certo"
 
-#: .\xplugin_grouprel\views.py:93 .\xplugin_grouprel\views.py:158
+#: .\xplugin_grouprel\views.py:93 .\xplugin_grouprel\views.py:160
 #, python-format
 msgid "Select %(objs)s before send data"
 msgstr "Selecione %(objs)s antes de enviar dados"

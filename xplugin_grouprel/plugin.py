@@ -37,6 +37,7 @@ class GroupRelPlugin(BaseAdminPlugin):
 
     def get_context(self, context):
         """Context from table template"""
+        group_model = self.group_m2m_relation.get_group_model()
         context['opts'] = self.group_m2m_relation.opts
         context['table'] = dict(
             instance=self.group_m2m_relation,
@@ -64,7 +65,10 @@ class GroupRelPlugin(BaseAdminPlugin):
         context['table_object_remove'] = {
             'url': self.admin_view.get_admin_url("grouprel-objs-remove",
                                                  pk=self.admin_view.org_obj.pk),
-            'title': _("Remove all selected %s ?") % force_text(model._meta.verbose_name_plural),
+            'title': _("Remove all selected %(objs)s from %(group)s ?") % {
+                'objs': force_text(model._meta.verbose_name_plural),
+                'group': force_text(group_model._meta.verbose_name),
+            }
         }
         return context
 
