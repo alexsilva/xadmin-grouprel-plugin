@@ -4,7 +4,7 @@ from django.db import models
 import collections
 
 
-class GroupM2MRelation(object):
+class GroupRelatedModel(object):
     """interface class"""
     model = None  # model related to the group
     fields = ()

@@ -21,19 +21,16 @@ site.register_plugin(GroupRelPlugin, UpdateAdminView)
 
 In the `adminx.py` script, implement the table interface:
 ```
-from xplugin_grouprel import GroupM2MRelation
+from xplugin_grouprel import GroupRelatedModel
 
-class GroupM2MRelationImpl(GroupM2MRelation):
-    # modelo intermediate group
-    through = User.groups.through
-    
+class GroupRelatedModelImpl(GroupRelatedModel):
     # model related to the group
     model = User
     
     # Fields that will appear in the data table
     fields = (
-        'user__username',
-        'user__email'
+        'username',
+        'email'
     )
 ```
 
@@ -45,7 +42,7 @@ from xadmin import site
 
 class GroupAdmin(object):
     # Activate the plugin in the group admin model
-    group_m2m_relation = GroupM2MRelationImpl
+    group_rel_model = GroupRelatedModelImpl
     
 
 # need to register the group again for the plugin to be activated.

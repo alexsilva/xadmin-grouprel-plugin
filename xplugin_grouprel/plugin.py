@@ -19,44 +19,44 @@ class GroupRelPlugin(BaseAdminPlugin):
     """Plugin that adds a table with model data related to the group"""
     template_table_ajax = 'xplugin-grouprel/inline-tabular-ajax.html'
 
-    group_m2m_relation = None
+    group_rel_model = None
 
     def init_request(self, object_id, *args, **kwargs):
         model = getattr(self.admin_view, "model", None)
-        self.group_m2m_relation = getattr(self.admin_view, "group_m2m_relation",
-                                          self.group_m2m_relation)
+        self.group_rel_model = getattr(self.admin_view, "group_rel_model",
+                                       self.group_rel_model)
 
-        if inspect.isclass(self.group_m2m_relation):
-            self.group_m2m_relation = self.group_m2m_relation(self)
+        if inspect.isclass(self.group_rel_model):
+            self.group_rel_model = self.group_rel_model(self)
 
-        return bool(self.group_m2m_relation is not None
+        return bool(self.group_rel_model is not None
                     and inspect.isclass(model)
-                    and issubclass(model, self.group_m2m_relation.get_group_model())
-                    and self.has_model_perm(self.group_m2m_relation.get_model(), 'view',
+                    and issubclass(model, self.group_rel_model.get_group_model())
+                    and self.has_model_perm(self.group_rel_model.get_model(), 'view',
                                             self.admin_view.request.user))
 
     def get_context(self, context):
         """Context from table template"""
-        group_model = self.group_m2m_relation.get_group_model()
-        context['opts'] = self.group_m2m_relation.opts
+        group_model = self.group_rel_model.get_group_model()
+        context['opts'] = self.group_rel_model.opts
         context['table'] = dict(
-            instance=self.group_m2m_relation,
-            columns=self.group_m2m_relation.columns,
+            instance=self.group_rel_model,
+            columns=self.group_rel_model.columns,
             id="group-rel-table"
         )
         context['group'] = dict(pk=self.admin_view.org_obj.pk)
         context['prefix'] = context['table']['id']
         context['inline_style'] = 'blank'
         context['has_group_rel_change_perm'] = \
-            self.has_model_perm(self.group_m2m_relation.get_model(), 'change',
+            self.has_model_perm(self.group_rel_model.get_model(), 'change',
                                 self.admin_view.request.user)
         context['ajax_table_url'] = self.admin_view.get_admin_url(
             "grouprel-dataview",
-            app_label=self.group_m2m_relation.opts.app_label,
-            model_name=self.group_m2m_relation.opts.model_name,
+            app_label=self.group_rel_model.opts.app_label,
+            model_name=self.group_rel_model.opts.model_name,
             pk=self.admin_view.org_obj.pk
         )
-        model = self.group_m2m_relation.get_model()
+        model = self.group_rel_model.get_model()
         context['table_object_add'] = {
             'url': self.admin_view.get_admin_url("grouprel-ajax-table",
                                                  pk=self.admin_view.org_obj.pk),
