@@ -65,10 +65,11 @@ class GroupRelatedModel(object):
             datatable_config.setdefault('orderable', True)
             datatable_config.setdefault('visible', True)
             datatable_config.setdefault('className', None)
+            datatable_config.setdefault('checkboxes', False)
             datatable_config.setdefault('index', index)
 
             names.append({
-                'verbose_name': (getattr(field, "verbose_name", column) or column),
+                'verbose_name': getattr(field, "verbose_name", column),
                 "queryset": {
                     "search_term": getattr(field, 'queryset_search_term', False),
                     'name': column,

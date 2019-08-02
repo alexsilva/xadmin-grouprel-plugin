@@ -89,6 +89,7 @@ class GroupRelPlugin(BaseAdminPlugin):
             'screen': (
                 settings.STATIC_URL + "xplugin-grouprel/css/dataTables.bootstrap.min.css",
                 settings.STATIC_URL + "xplugin-grouprel/css/select.bootstrap.min.css",
+                settings.STATIC_URL + "xplugin-grouprel/css/dataTables.checkboxes.css",
                 settings.STATIC_URL + "xplugin-grouprel/css/styles.css",
             )
         })
@@ -97,6 +98,7 @@ class GroupRelPlugin(BaseAdminPlugin):
             settings.STATIC_URL + "xplugin-grouprel/js/dataTables.bootstrap.min.js",
             settings.STATIC_URL + "xplugin-grouprel/js/dataTables.buttons.min.js",
             settings.STATIC_URL + "xplugin-grouprel/js/dataTables.select.min.js",
+            settings.STATIC_URL + "xplugin-grouprel/js/dataTables.checkboxes.min.js",
             settings.STATIC_URL + "xplugin-grouprel/js/select.bootstrap.min.js",
             settings.STATIC_URL + "xplugin-grouprel/js/grouprel.plugin.quick-form.js",
             settings.STATIC_URL + "xplugin-grouprel/js/group.table.plugin.js",

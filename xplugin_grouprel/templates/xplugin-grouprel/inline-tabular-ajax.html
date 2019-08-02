@@ -1,5 +1,6 @@
 {% extends "xadmin/edit_inline/base.html" %}
 {% load i18n xadmin_tags crispy_forms_tags %}
+{% load table_grouprel_tags %}
 
 {% block box_title %}{{ opts.verbose_name_plural|title }}{% endblock box_title %}
 {% block box_attrs %}{% endblock box_attrs %}
@@ -22,6 +23,7 @@
             orderable: {{ column.datatable.orderable|yesno:"true,false" }},
             visible: {{ column.datatable.visible|yesno:"true,false" }},
             className: {% if column.datatable.className %}"{{ column.datatable.className }}"{% else %}null{% endif %},
+            checkboxes: {{ column.datatable.checkboxes|json_dumps|safe }},
             {% if column.datatable.render %}
             render: {{ column.datatable.render|safe }},
             {% endif %}
