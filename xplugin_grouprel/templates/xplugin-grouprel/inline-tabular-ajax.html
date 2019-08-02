@@ -21,7 +21,10 @@
             searchable: {{ column.datatable.searchable|yesno:"true,false" }},
             orderable: {{ column.datatable.orderable|yesno:"true,false" }},
             visible: {{ column.datatable.visible|yesno:"true,false" }},
-            className: {% if column.datatable.className %}"{{ column.datatable.className }}"{% else %}null{% endif %}
+            className: {% if column.datatable.className %}"{{ column.datatable.className }}"{% else %}null{% endif %},
+            {% if column.datatable.render %}
+            render: {{ column.datatable.render|safe }},
+            {% endif %}
         });
         {% endfor %}
     </script>
@@ -31,7 +34,7 @@
         <thead>
             <tr>
                 {% for column in table.columns %}
-                    <th>{{ column.verbose_name }}</th>
+                    <th>{{ column.verbose_name|safe }}</th>
                 {% endfor %}
             </tr>
         </thead>

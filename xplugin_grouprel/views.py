@@ -176,7 +176,6 @@ class GroupRelDataView(BaseDatatableView, BaseAdminView):
     def __init__(self, *args, **kwargs):
         self.plugin_classes = []
         super(GroupRelDataView, self).__init__(*args, **kwargs)
-        self.column_first = None
         self.table = None
         self.map_fields = None
 
@@ -205,6 +204,7 @@ class GroupRelDataView(BaseDatatableView, BaseAdminView):
 
     def render_column(self, row, column):
         column_val = self.map_fields[column]
+        table_column = getattr(self.table, column_val, None)
         obj = row
         try:
             field, db_column = column_val.split("__")
@@ -212,11 +212,11 @@ class GroupRelDataView(BaseDatatableView, BaseAdminView):
         except ValueError:
             field = db_column = None
 
-        if field is None and hasattr(self.table, column_val):
-            method = getattr(self.table, column_val)
-            value = method(obj)
+        # The column is a callable method or function.
+        if field is None and table_column:
+            value = table_column(obj)
             try:
-                field = getattr(method, "admin_order_field")
+                field = getattr(table_column, "admin_order_field")
             except models.FieldDoesNotExist:
                 field = self.table.opts.get_field(column)
         elif isinstance(field, models.ForeignKey):
@@ -225,7 +225,7 @@ class GroupRelDataView(BaseDatatableView, BaseAdminView):
             value = unicode(getattr(obj, column))
             field = self.table.opts.get_field(column)
 
-        if self.column_first == column and value and field and \
+        if getattr(table_column, "link_display", False) and value and field and \
                 self.has_model_perm(self.table.get_model(), 'change', self.request.user):
             field_name = getattr(obj, field if isinstance(field, six.string_types) else field.name)
             change_url = self.get_model_url(self.table.get_model(), 'change', field_name)
@@ -240,11 +240,7 @@ class GroupRelDataView(BaseDatatableView, BaseAdminView):
         self.table = admin_class.group_rel_model(self)
         self.map_fields = self.table.map_fields
         self.columns = self.map_fields.keys()
-        column = self.table.get_first_column()
-        if column is not None:
-            self.column_first = self.columns[column['datatable']['index']]
-        else:
-            self.column_first = column
+
         return super(GroupRelDataView, self).initialize(*args, **kwargs)
 
     def get_initial_queryset(self):

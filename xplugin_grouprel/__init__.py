@@ -40,13 +40,6 @@ class GroupRelatedModel(object):
             fields[field] = field_name
         return fields
 
-    def get_first_column(self):
-        for column in self.columns:
-            # search the first visible column
-            if column['datatable']['visible']:
-                return column
-        return None
-
     @cached_property
     def columns(self):
         """Returns a list with verbose_name of the configured fields"""
@@ -66,6 +59,14 @@ class GroupRelatedModel(object):
                 field = field.rel.to._meta.get_field(db_column)
             else:
                 field = self.opts.get_field(column)
+
+            datatable_config = dict(getattr(field, 'datatable_config', {}))
+            datatable_config.setdefault('searchable', True)
+            datatable_config.setdefault('orderable', True)
+            datatable_config.setdefault('visible', True)
+            datatable_config.setdefault('className', None)
+            datatable_config.setdefault('index', index)
+
             names.append({
                 'verbose_name': (getattr(field, "verbose_name", column) or column),
                 "queryset": {
@@ -73,13 +74,7 @@ class GroupRelatedModel(object):
                     'name': column,
                 },
                 # datatable configuration
-                'datatable': {
-                    'searchable': getattr(field, 'datatable_searchable', True),
-                    'orderable': getattr(field, 'datatable_orderable', True),
-                    'visible': getattr(field, 'datatable_visible', True),
-                    'className': getattr(field, 'datatable_class_name', None),
-                    'index': index
-                }
+                'datatable': datatable_config
             })
         return names
 
