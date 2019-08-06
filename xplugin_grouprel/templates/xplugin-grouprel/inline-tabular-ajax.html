@@ -15,6 +15,18 @@
                 url: "{{ ajax_table_url }}"
             },
             columns_defs: [],
+            // utils
+            get_checkboxes_column_index: function() {
+                var checkboxes_index = 1;
+                // get checkbox column index
+                $.each(this.columns_defs, function (index, value) {
+                    if (value.checkboxes !== false) {
+                        checkboxes_index = index;
+                        return false;
+                    }
+                });
+                return checkboxes_index;
+            }
         };
         {% for column in table.columns %}
         datatable_config.columns_defs.push({

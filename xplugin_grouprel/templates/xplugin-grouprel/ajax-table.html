@@ -9,19 +9,9 @@
         $(function () {
             datatable_config.ajax.url = datatable_config.ajax.url + "?reversed=1";
             var table = $("#{{ table.id }}").create_table(datatable_config);
-            var get_checkboxes_column_index = function() {
-                var checkboxes_index = 1;
-                // get checkbox column index
-                $.each(datatable_config.columns_defs, function (index, value) {
-                    if (value.checkboxes !== false) {
-                        checkboxes_index = index;
-                        return false;
-                    }
-                });
-                return checkboxes_index;
-            };
+            var checkboxes_column_index = datatable_config.get_checkboxes_column_index();
             $('#form-ajax-objs-add').on('form-save', function (evt, form_data) {
-                var rows_selected = table.column(get_checkboxes_column_index()).checkboxes.selected();
+                var rows_selected = table.column(checkboxes_column_index).checkboxes.selected();
                 for (var index = 0; index < rows_selected.length; index++) {
                     form_data.append("objs", rows_selected[index])
                 }
@@ -29,7 +19,7 @@
                 $('table.table').each(function (item) {
                     var table = $(this).data("table");
                     if (table && Object.keys(table).length > 0) {
-                        table.column(get_checkboxes_column_index()).checkboxes.deselectAll();
+                        table.column(checkboxes_column_index).checkboxes.deselectAll();
                         table.ajax.reload();
                     }
                 });

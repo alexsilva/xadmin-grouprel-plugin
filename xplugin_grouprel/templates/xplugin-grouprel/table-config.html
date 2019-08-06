@@ -21,11 +21,11 @@ $(function () {
         text: "<i class=\"fa fa-trash-o\"></i>",
         tag: 'a',
         action: function (e, dt, button, config) {
-            var rows = dt.rows({selected: true});
-            var data = rows.data();
             var objs = [];
-            for (var index = 0; index < data.length; index++) {
-                objs.push(data[index][0])
+            var checkboxes_column_index = datatable_config.get_checkboxes_column_index();
+            var rows_selected = dt.column(checkboxes_column_index).checkboxes.selected();
+            for (var index = 0; index < rows_selected.length; index++) {
+                objs.push(rows_selected[index])
             }
             button.ajax_btn_form_exc({
                 data: {objs: objs},
@@ -34,6 +34,7 @@ $(function () {
                     $('table.table').each(function (index) {
                         var table = $(this).data("table");
                         if (table && Object.keys(table).length > 0) {
+                            table.column(checkboxes_column_index).checkboxes.deselectAll();
                             table.ajax.reload();
                         }
                     });
