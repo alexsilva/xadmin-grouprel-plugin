@@ -18,7 +18,6 @@
             // utils
             get_columns_order: function() {
                 var order = [];
-                // get checkbox column index
                 $.each(this.columns_defs, function (index, column) {
                     if (column.order) { order.push([column.targets, column.order]); }
                 });
