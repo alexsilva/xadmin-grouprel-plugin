@@ -20,6 +20,7 @@
                 }
                 }
             },
+            order: datatable_config.get_columns_order(),
             scrollX: true,
             processing: true,
             serverSide: true,
