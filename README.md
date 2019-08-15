@@ -38,10 +38,13 @@ class GroupRelatedModelImpl(GroupRelatedModel):
     def resolve_field_user_pk(self, instance):
         return instance.pk
     resolve_field_user_pk.verbose_name = u"hidden-user-pk"
-    resolve_field_user_pk.datatable_visible = False
-    resolve_field_user_pk.datatable_searchable = False
-    resolve_field_user_pk.datatable_orderable = False
     resolve_field_user_pk.admin_order_field = "id"
+    resolve_field_user_pk.datatable_config = dict(
+        visible = False,
+        searchable = False,
+        orderable = False
+        # order='asc'
+    )
 ```
 
 In the admin model, configure the implemented class:
