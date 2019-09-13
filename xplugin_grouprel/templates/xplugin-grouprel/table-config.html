@@ -4,8 +4,8 @@ $(function () {
     {% if has_group_rel_change_perm %}
     datatable_config.buttons.push({
         tag: "a",
-        className: "btn btn-primary btn-sm btn-ajax-table-add",
-        text: "<i class=\"fa fa-plus\"></i>",
+        className: "btn btn-link btn-sm btn-separator btn-ajax-table-add",
+        text: "<i class=\"fa fa-plus-circle\"></i> {{ table_object_add.title }}",
         action: function (e, dt, node, config) {
             $('div.modal.quick-form')
                 .find(".has-error").each(function () {
@@ -17,8 +17,8 @@ $(function () {
     });
     datatable_config.buttons.push({
         extend: 'selected',
-        className: 'btn btn-danger btn-sm btn-ajax-table-remove',
-        text: "<i class=\"fa fa-trash-o\"></i>",
+        className: 'btn btn-link btn-sm btn-separator btn-ajax-table-remove',
+        text: "<i class=\"fa fa-trash-o\"></i> {{ table_object_remove.title }}",
         tag: 'a',
         action: function (e, dt, button, config) {
             var objs = [];

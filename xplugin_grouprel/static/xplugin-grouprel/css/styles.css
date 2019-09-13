@@ -12,7 +12,7 @@ div.dataTables_processing {
 }
 
 div.dt-buttons {
-    margin-right: 5px;
+    margin-right: 15px;
     position: relative;
     float: left;
 }
@@ -24,6 +24,12 @@ a.btn-table-new {
 div.dataTables_length {
     position: relative;
     float: left;
+}
+
+div.dataTables_length select {
+    width: auto !important;
+    margin-left: 10px;
+    padding-right:0px;
 }
 
 table.dataTable tbody>tr.selected, 
@@ -52,4 +58,22 @@ div.dataTables_wrapper div.dataTables_info {
 div.dataTables_wrapper div.dataTables_paginate {
     float: right;
     padding-top: 0.25em;
+}
+
+a.btn-link {
+    color: #606072;
+}
+
+a.dt-button.btn {
+   font-size: inherit;
+   margin-top: -1px;
+}
+
+a.dt-button.btn.btn-separator:after {
+    content: '';
+    position: absolute;
+    top:6px;
+    height: 18px;
+    border-left: 1px solid #d6d7d9;
+    margin-left: 13px;
 }

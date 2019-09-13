@@ -60,14 +60,13 @@ class GroupRelPlugin(BaseAdminPlugin):
         context['table_object_add'] = {
             'url': self.admin_view.get_admin_url("grouprel-ajax-table",
                                                  pk=self.admin_view.org_obj.pk),
-            'title': _('Add %s') % force_text(model._meta.verbose_name)
+            'title': _('Add %s') % force_text(model._meta.verbose_name_plural)
         }
         context['table_object_remove'] = {
             'url': self.admin_view.get_admin_url("grouprel-objs-remove",
                                                  pk=self.admin_view.org_obj.pk),
-            'title': _("Remove all selected %(objs)s from %(group)s ?") % {
-                'objs': force_text(model._meta.verbose_name_plural),
-                'group': force_text(group_model._meta.verbose_name),
+            'title': _("Remover %(objs)s") % {
+                'objs': force_text(model._meta.verbose_name_plural)
             }
         }
         return context
