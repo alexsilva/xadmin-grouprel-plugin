@@ -1,6 +1,6 @@
 div#group-rel-table_wrapper,
 div#group-rel-ajax-table_wrapper {
-    margin-top: 5px;
+    margin-top: 10px;
 }
 
 div#group-rel-table_wrapper {
@@ -20,7 +20,25 @@ div.dt-buttons {
 a.btn-table-new {
     margin-left: 0 !important;
 }
+
 div.dataTables_length {
     position: relative;
     float: left;
+}
+
+table.dataTable tbody>tr.selected, 
+table.dataTable tbody>tr>.selected {
+    background-color: #fcf8e3;
+}
+
+table.dataTable tbody tr.selected a, 
+table.dataTable tbody th.selected a, 
+table.dataTable tbody td.selected a {
+    color:#606072;
+}
+
+table.dataTable tbody tr.selected,
+table.dataTable tbody th.selected, 
+table.dataTable tbody td.selected {
+    color:inherit;
 }
