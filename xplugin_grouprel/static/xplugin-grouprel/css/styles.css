@@ -3,6 +3,14 @@ div#group-rel-ajax-table_wrapper {
     margin-top: 5px;
 }
 
+div#group-rel-table_wrapper {
+    position: relative;
+}
+
+div.dataTables_processing {
+    z-index: 1;
+}
+
 div.dt-buttons {
     margin-right: 5px;
     position: relative;
