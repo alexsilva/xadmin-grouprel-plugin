@@ -1,10 +1,18 @@
 div#group-rel-table_wrapper,
 div#group-rel-ajax-table_wrapper {
-    margin-top: 5px;
+    margin-top: 10px;
+}
+
+div#group-rel-table_wrapper {
+    position: relative;
+}
+
+div.dataTables_processing {
+    z-index: 1;
 }
 
 div.dt-buttons {
-    margin-right: 5px;
+    margin-right: 15px;
     position: relative;
     float: left;
 }
@@ -12,7 +20,60 @@ div.dt-buttons {
 a.btn-table-new {
     margin-left: 0 !important;
 }
+
 div.dataTables_length {
     position: relative;
     float: left;
+}
+
+div.dataTables_length select {
+    width: auto !important;
+    margin-left: 10px;
+    padding-right:0px;
+}
+
+table.dataTable tbody>tr.selected, 
+table.dataTable tbody>tr>.selected {
+    background-color: #fcf8e3;
+}
+
+table.dataTable tbody tr.selected a, 
+table.dataTable tbody th.selected a, 
+table.dataTable tbody td.selected a {
+    color:#606072;
+}
+
+table.dataTable tbody tr.selected,
+table.dataTable tbody th.selected, 
+table.dataTable tbody td.selected {
+    color:inherit;
+}
+
+div.dataTables_wrapper div.dataTables_info {
+    clear: both;
+    float: left;
+    padding-top: 0.755em;
+}
+
+div.dataTables_wrapper div.dataTables_paginate {
+    float: right;
+    padding-top: 0.25em;
+}
+
+a.btn-link {
+    color: #606072;
+}
+
+a.dt-button.btn {
+   font-size: inherit;
+   margin-top: -1px;
+}
+
+a.dt-button.btn.btn-separator:after {
+    content: '';
+    position: absolute;
+    top:6px;
+    height: 18px;
+    border-left: 1px solid #d6d7d9;
+    margin-left: 13px;
 }
