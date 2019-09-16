@@ -65,7 +65,7 @@ class GroupRelPlugin(BaseAdminPlugin):
         context['table_object_remove'] = {
             'url': self.admin_view.get_admin_url("grouprel-objs-remove",
                                                  pk=self.admin_view.org_obj.pk),
-            'title': _("Remover %(objs)s") % {
+            'title': _("Remove %(objs)s") % {
                 'objs': force_text(model._meta.verbose_name_plural)
             }
         }
