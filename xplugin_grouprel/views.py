@@ -240,7 +240,7 @@ class GroupRelDataView(BaseDatatableView, BaseAdminView):
 
         self.table = admin_class.group_rel_model(self)
         self.map_fields = self.table.map_fields
-        self.columns = self.map_fields.keys()
+        self.columns = list(self.map_fields.keys())
 
         return super(GroupRelDataView, self).initialize(*args, **kwargs)
 
