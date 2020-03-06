@@ -45,7 +45,7 @@ class GroupRelatedModel(object):
         """Returns a list with verbose_name of the configured fields"""
         names = []
         fields = self.map_fields
-        for index, column in enumerate(fields.iterkeys()):
+        for index, column in enumerate(fields.keys()):
             column_val = fields[column]
             try:
                 field, db_column = column_val.split("__")

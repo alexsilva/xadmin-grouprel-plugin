@@ -11,6 +11,7 @@ from django.utils.translation import ugettext as _
 from django_datatables_view.base_datatable_view import BaseDatatableView
 from xadmin.plugins.actions import DeleteSelectedAction
 from xadmin.views import BaseAdminView, CommAdminView
+import functools
 
 
 class ObjectDeleteSelected(DeleteSelectedAction):
@@ -220,16 +221,16 @@ class GroupRelDataView(BaseDatatableView, BaseAdminView):
             except models.FieldDoesNotExist:
                 field = self.table.opts.get_field(column)
         elif isinstance(field, models.ForeignKey):
-            value = reduce(lambda x, y: getattr(x, y), [obj, field.name, db_column])
+            value = functools.reduce(lambda x, y: getattr(x, y), [obj, field.name, db_column])
         else:
-            value = unicode(getattr(obj, column))
+            value = str(getattr(obj, column))
             field = self.table.opts.get_field(column)
 
         if getattr(table_column, "link_display", False) and value and field and \
                 self.has_model_perm(self.table.get_model(), 'change', self.request.user):
             field_name = getattr(obj, field if isinstance(field, six.string_types) else field.name)
             change_url = self.get_model_url(self.table.get_model(), 'change', field_name)
-            return u'<a href="{0}">{1}</a>'.format(change_url, value)
+            return '<a href="{0}">{1}</a>'.format(change_url, value)
         return value
 
     def initialize(self, *args, **kwargs):
