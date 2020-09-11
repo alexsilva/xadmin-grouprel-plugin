@@ -2,7 +2,10 @@ import six
 from django.apps import apps
 from django.contrib.auth.models import Group
 from django.core.exceptions import PermissionDenied, ValidationError
-from django.core.urlresolvers import reverse
+try:
+    from django.urls import reverse
+except ImportError:
+    from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models import Q
 from django.http import HttpResponse, JsonResponse
