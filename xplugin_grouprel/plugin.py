@@ -1,6 +1,7 @@
 import inspect
 
 from django.conf import settings
+from django.forms import Media
 from django.template.loader import render_to_string
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext as _
@@ -78,21 +79,19 @@ class GroupRelPlugin(BaseAdminPlugin):
         return nodes.append(html)
 
     def block_extrabody(self, context, nodes, *args, **kwargs):
-        html = render_to_string(
-            "xplugin-grouprel/table-config.html",
-            context=get_context_dict(context))
+        html = render_to_string("xplugin-grouprel/table-config.html",
+                                context=get_context_dict(context))
         return nodes.append(html)
 
     def get_media(self, media):
-        media.add_css({
+        media += Media(css={
             'screen': (
                 settings.STATIC_URL + "xplugin-grouprel/css/dataTables.bootstrap.min.css",
                 settings.STATIC_URL + "xplugin-grouprel/css/select.bootstrap.min.css",
                 settings.STATIC_URL + "xplugin-grouprel/css/dataTables.checkboxes.css",
                 settings.STATIC_URL + "xplugin-grouprel/css/styles.css",
             )
-        })
-        media.add_js((
+        }, js=(
             settings.STATIC_URL + "xplugin-grouprel/js/jquery.dataTables.min.js",
             settings.STATIC_URL + "xplugin-grouprel/js/dataTables.bootstrap.min.js",
             settings.STATIC_URL + "xplugin-grouprel/js/dataTables.buttons.min.js",
