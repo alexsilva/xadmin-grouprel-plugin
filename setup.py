@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='xadmin-grouprel-plugin',
-    version='3.0',
+    version='3.2',
     packages=['xplugin_grouprel',
               'xplugin_grouprel.templatetags'],
     install_requires=["django-datatables-view"],
