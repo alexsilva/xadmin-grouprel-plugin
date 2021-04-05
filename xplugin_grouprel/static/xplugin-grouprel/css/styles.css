@@ -27,7 +27,6 @@ div.dataTables_length {
 }
 
 div.dataTables_length select {
-    width: auto !important;
     margin-left: 10px;
     padding-right:0px;
 }
