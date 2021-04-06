@@ -152,12 +152,12 @@
         get_btn_submit: function() {
             switch (this.options.btn_submit_type || "default") {
                 case "remove":
-                    return '<a class="btn btn-danger btn-submit">' +
+                    return '<a class="btn btn-danger text-white btn-submit">' +
                            '<i class="fa fa-trash-o"></i>&nbsp' +
                             gettext("Remove") +
                             '</a>';
                 default:
-                    return '<a class="btn btn-primary btn-submit">' +
+                    return '<a class="btn btn-primary text-white btn-submit">' +
                         '<i class="fa fa-plus"></i>&nbsp' +
                         gettext("Add") +
                         '</a>'
@@ -169,13 +169,13 @@
 
             if (!this.modal) {
                 this.modal = $('<div class="modal fade quick-form-modal" role="dialog"><div class="modal-dialog modal-lg"><div class="modal-content">' +
-                    '<div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h3>' +
-                    this.$btn.attr('title') + '</h3></div><div class="modal-body"></div>' +
-                    '<div class="modal-footer" style="display: none;"><button class="btn btn-default" data-dismiss="modal" aria-hidden="true">' + gettext('Close') + '</button>' +
+                    '<div class="modal-header"><h5 class="modal-title">' + this.$btn.attr('title') + '</h5>' +
+                    '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button></div><div class="modal-body"></div>' +
+                    '<div class="modal-footer" style="display: none;"><button class="btn btn-secondary" data-dismiss="modal" aria-hidden="true">' + gettext('Close') + '</button>' +
                     this.get_btn_submit() + '</div></div></div></div>');
                 $('body').append(this.modal);
             }
-            this.modal.find('.modal-body').html('<h2 style="text-align:center;"><i class="fa-spinner fa-spin fa fa-large"></i></h2>');
+            this.modal.find('.modal-body').html('<h2 class="text-center"><i class="fa-spinner fa-spin fa fa-large"></i></h2>');
             var data = this.options.data || null;
             if (data != null && Object.keys(data).length > 0) { // post
                 data.csrfmiddlewaretoken = $.getCookie('csrftoken');
