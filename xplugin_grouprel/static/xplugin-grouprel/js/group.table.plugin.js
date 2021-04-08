@@ -11,7 +11,7 @@
                 }
             },
             language: {
-                url: static_url + window.__admin_language_code__ + ".json",
+                url: static_url + window.__admin_language_code__.toLowerCase() + ".json",
                 select: {
                 rows: {
                     _: gettext("%d rows selected"),
