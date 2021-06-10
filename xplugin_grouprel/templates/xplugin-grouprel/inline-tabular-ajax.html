@@ -6,7 +6,7 @@
 {% block box_attrs %}{% endblock box_attrs %}
 {% block box_content_class %}{{inline_style}} formset-content{% endblock box_content_class %}
 {% block box_content_attrs %}id="{{ prefix }}-{{inline_style}}-{{ group.pk }}" data-prefix="{{ prefix }}" data-style="{{inline_style}}"{% endblock box_content_attrs %}
-
+{% block box_collapse_target %}card-collapse-{{ group.pk }}{% endblock %}
 
 {% block box_content %}
     <script type="application/javascript">

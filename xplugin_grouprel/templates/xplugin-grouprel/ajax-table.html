@@ -2,6 +2,7 @@
 {% load staticfiles %}
 
 {% block box_title %}{{ box_title }}{% endblock %}
+{% block box_collapse_target %}card-collapse-ajax-{{ group.pk }}{% endblock %}
 
 {% block box_content %}
     {{ block.super }}
