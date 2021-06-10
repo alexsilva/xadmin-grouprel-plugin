@@ -140,11 +140,11 @@ class AjaxTableObjsGroupView(CommAdminView):
         context['inline_style'] = 'blank'
         context['prefix'] = context['table']['id']
         context['group'] = dict(pk=self.kwargs['pk'])
-        context['ajax_table_url'] = reverse(
-            '%s:%s' % (self.admin_site.app_name, "grouprel-dataview"),
-            kwargs=dict(app_label=self.table.opts.app_label,
-                        model_name=self.table.opts.model_name,
-                        pk=self.kwargs['pk'])
+        context['ajax_table_url'] = self.get_admin_url(
+            "grouprel-dataview",
+            app_label=self.table.opts.app_label,
+            model_name=self.table.opts.model_name,
+            pk=self.kwargs['pk']
         )
         return context
 
@@ -158,7 +158,7 @@ class AjaxTableObjsGroupView(CommAdminView):
         if not self.has_model_perm(model, 'change', self.request.user):
             raise PermissionDenied
         objs = (request.POST.getlist("objs") or
-                request.POST.getlist("objs" + '[]'))
+                request.POST.getlist("objs[]"))
         if not objs:
             return JsonResponse({
                 'result': 'fail',
