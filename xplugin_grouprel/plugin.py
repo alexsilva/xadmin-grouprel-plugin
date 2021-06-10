@@ -73,9 +73,10 @@ class GroupRelPlugin(BaseAdminPlugin):
         return context
 
     def block_after_fieldsets(self, context, nodes, *args, **kwargs):
-        html = render_to_string(
-            self.template_table_ajax,
-            context=get_context_dict(context))
+        context = get_context_dict(context)
+        context['has_add_permission'] = False
+        html = render_to_string(self.template_table_ajax,
+                                context=context)
         return nodes.append(html)
 
     def block_extrabody(self, context, nodes, *args, **kwargs):
