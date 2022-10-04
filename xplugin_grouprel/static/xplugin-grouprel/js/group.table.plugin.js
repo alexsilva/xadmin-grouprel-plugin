@@ -1,7 +1,7 @@
 (function ($) {
     $.fn.create_table = function (datatable_config) {
         var csrftoken = $.getCookie('csrftoken');
-        var static_url = window.__admin_media_prefix__.replace(/xadmin\/$/i, "xplugin-grouprel/");
+        var static_url = window.xadmin.media_prefix.replace(/xadmin\/$/i, "xplugin-grouprel/");
         var config = {
             ajax: {
                 url: datatable_config.ajax.url,
@@ -11,7 +11,7 @@
                 }
             },
             language: {
-                url: static_url + window.__admin_language_code__.toLowerCase() + ".json",
+                url: static_url + window.xadmin.language_code.toLowerCase() + ".json",
                 select: {
                 rows: {
                     _: gettext("%d rows selected"),
