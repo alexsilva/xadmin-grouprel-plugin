@@ -18,27 +18,27 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: .\xplugin_grouprel\static\xplugin-grouprel\js\group.table.plugin.js:17
+#: .\xadmin_group_related\static\xplugin-grouprel\js\group.table.plugin.js:17
 #, javascript-format
 msgid "%d rows selected"
 msgstr "%d itens selecionados"
 
-#: .\xplugin_grouprel\static\xplugin-grouprel\js\group.table.plugin.js:18
+#: .\xadmin_group_related\static\xplugin-grouprel\js\group.table.plugin.js:18
 msgid "Click a row to select it"
 msgstr "Clique para selecionar itens"
 
-#: .\xplugin_grouprel\static\xplugin-grouprel\js\group.table.plugin.js:19
+#: .\xadmin_group_related\static\xplugin-grouprel\js\group.table.plugin.js:19
 msgid "1 row selected"
 msgstr "1 item selecionado"
 
-#: .\xplugin_grouprel\static\xplugin-grouprel\js\grouprel.plugin.quick-form.js:157
+#: .\xadmin_group_related\static\xplugin-grouprel\js\grouprel.plugin.quick-form.js:157
 msgid "Remove"
 msgstr "Remover"
 
-#: .\xplugin_grouprel\static\xplugin-grouprel\js\grouprel.plugin.quick-form.js:162
+#: .\xadmin_group_related\static\xplugin-grouprel\js\grouprel.plugin.quick-form.js:162
 msgid "Add"
 msgstr "Adicionar"
 
-#: .\xplugin_grouprel\static\xplugin-grouprel\js\grouprel.plugin.quick-form.js:174
+#: .\xadmin_group_related\static\xplugin-grouprel\js\grouprel.plugin.quick-form.js:174
 msgid "Close"
 msgstr "Fechar"

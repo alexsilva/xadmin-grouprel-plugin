@@ -18,17 +18,17 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: .\xplugin_grouprel\plugin.py:63
+#: .\xadmin_group_related\plugin.py:63
 #, python-format
 msgid "Add %s"
 msgstr "Adicionar %s"
 
-#: .\xplugin_grouprel\plugin.py:68
+#: .\xadmin_group_related\plugin.py:68
 #, python-format
 msgid "Remove %(objs)s"
 msgstr "Remover %(objs)s"
 
-#: .\xplugin_grouprel\templates\xplugin-grouprel\model-delete-selected-confirm.html:10
+#: .\xadmin_group_related\templates\xplugin-grouprel\model-delete-selected-confirm.html:10
 #, python-format
 msgid ""
 "Deleting the selected %(objects_name)s would result in deleting related "
@@ -38,30 +38,30 @@ msgid ""
 "                "
 msgstr ""
 
-#: .\xplugin_grouprel\templates\xplugin-grouprel\model-delete-selected-confirm.html:22
+#: .\xadmin_group_related\templates\xplugin-grouprel\model-delete-selected-confirm.html:22
 #, python-format
 msgid ""
 "Deleting the selected %(objects_name)s would require deleting then following "
 "protected related objects:"
 msgstr ""
 
-#: .\xplugin_grouprel\templates\xplugin-grouprel\model-delete-selected-confirm.html:32
+#: .\xadmin_group_related\templates\xplugin-grouprel\model-delete-selected-confirm.html:32
 #, python-format
 msgid ""
 "Are you sure you want to delete the selected %(objects_name)s? All of the "
 "following objects and their related items will be deleted:"
 msgstr ""
 
-#: .\xplugin_grouprel\templates\xplugin-grouprel\model-delete-selected-confirm.html:48
+#: .\xadmin_group_related\templates\xplugin-grouprel\model-delete-selected-confirm.html:48
 msgid "Yes, I'm sure"
 msgstr "Sim, estou certo"
 
-#: .\xplugin_grouprel\views.py:94 .\xplugin_grouprel\views.py:161
+#: .\xadmin_group_related\views.py:94 .\xadmin_group_related\views.py:161
 #, python-format
 msgid "Select %(objs)s before send data"
 msgstr "Selecione %(objs)s antes de enviar dados"
 
-#: .\xplugin_grouprel\views.py:127
+#: .\xadmin_group_related\views.py:127
 #, python-format
 msgid "Add %(objs)s to %(group)s"
 msgstr "Adicionar %(objs)s ao %(group)s"

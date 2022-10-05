@@ -9,11 +9,11 @@ Install
 Setup
 -
 
-Add the app to installed-apps: `xplugin_grouprel`
+Add the app to installed-apps: `xadmin_group_related`
 
 Register the plugin:
 ```
-from xplugin_grouprel.plugin import GroupRelPlugin
+from xadmin_group_related.plugin import GroupRelPlugin
 from xadmin import site
 
 site.register_plugin(GroupRelPlugin, UpdateAdminView)
@@ -21,7 +21,7 @@ site.register_plugin(GroupRelPlugin, UpdateAdminView)
 
 In the `adminx.py` script, implement the table interface:
 ```
-from xplugin_grouprel import GroupRelatedModel
+from xadmin_group_related import GroupRelatedModel
 
 class GroupRelatedModelImpl(GroupRelatedModel):
     # model related to the group
@@ -49,7 +49,7 @@ class GroupRelatedModelImpl(GroupRelatedModel):
 
 In the admin model, configure the implemented class:
 ```
-from xplugin_grouprel.plugin import GroupRelPlugin
+from xadmin_group_related.plugin import GroupRelPlugin
 from django.contrib.auth.models import Group
 from xadmin import site
 

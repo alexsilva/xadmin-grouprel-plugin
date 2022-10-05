@@ -1,3 +1,4 @@
+# coding=utf-8
 import inspect
 
 from django.conf import settings
@@ -9,7 +10,7 @@ from xadmin import site
 from xadmin.plugins.utils import get_context_dict
 from xadmin.views import BaseAdminPlugin
 
-from xplugin_grouprel.views import (
+from xadmin_group_related.views import (
     GroupRelDataView,
     AjaxObjsGroupRemove,
     AjaxTableObjsGroupView

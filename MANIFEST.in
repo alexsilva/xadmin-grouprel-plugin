@@ -1,6 +1,6 @@
 include README.md
 include LICENSE
 include MANIFEST.in
-recursive-include xplugin_grouprel/locale *
-recursive-include xplugin_grouprel/static *
-recursive-include xplugin_grouprel/templates *
+recursive-include xadmin_group_related/locale *
+recursive-include xadmin_group_related/static *
+recursive-include xadmin_group_related/templates *
