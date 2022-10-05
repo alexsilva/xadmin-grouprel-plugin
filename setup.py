@@ -1,10 +1,11 @@
+# coding=utf-8
 from setuptools import setup
 
 setup(
-    name='xadmin-grouprel-plugin',
+    name='xadmin-group-related',
     version='3.2',
-    packages=['xplugin_grouprel',
-              'xplugin_grouprel.templatetags'],
+    packages=['xadmin_group_related',
+              'xadmin_group_related.templatetags'],
     install_requires=["django-datatables-view"],
     url='https://github.com/alexsilva/xadmin-grouprel-plugin',
     license='MIT',
