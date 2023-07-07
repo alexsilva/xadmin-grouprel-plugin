@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name='xadmin-group-related',
-    version='3.2',
+    version='3.3',
     packages=['xadmin_group_related',
               'xadmin_group_related.templatetags'],
     install_requires=["django-datatables-view"],
