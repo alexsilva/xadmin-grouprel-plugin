@@ -186,25 +186,27 @@ class GroupRelDataView(BaseDatatableView, BaseAdminView):
     def get_filter_method(self):
         return self.FILTER_ICONTAINS
 
-    def get_filter_query(self):
-        search = self._querydict.get('search[value]', None)
-        query = Q()
-        if search:
-            # Multiple column search
-            filter_method = self.get_filter_method()
-            chunks = []
-            for s in search.split(" ", 4):
-                s = s.strip()
-                if len(s) == 0:
-                    continue
-                chunks.append(s)
-            if len(chunks) > 0:
-                for column in self.table.columns:
-                    config = column['queryset']
-                    if config['search_term']:
-                        for chunk in chunks:
-                            query |= Q(**{"{0[name]}__{1:s}".format(config, filter_method): chunk})
-        return query
+    def filter_queryset(self, queryset, **kwargs):
+        qs = super().filter_queryset(queryset, **kwargs)
+        if not self.pre_camel_case_notation:
+            search = self._querydict.get('search[value]', None)
+            query = Q()
+            if search:
+                # Multiple column search
+                chunks, filter_method = [], self.get_filter_method()
+                for s in search.split(" ", 4):
+                    s = s.strip()
+                    if len(s) == 0:
+                        continue
+                    chunks.append(s)
+                if len(chunks) > 0:
+                    for column in self.table.columns:
+                        config = column['queryset']
+                        if config['search_term']:
+                            for chunk in chunks:
+                                query |= Q(**{"{0[name]}__{1:s}".format(config, filter_method): chunk})
+                qs |= queryset.filter(query)
+        return qs
 
     def render_column(self, row, column):
         column_val = self.map_fields[column]
