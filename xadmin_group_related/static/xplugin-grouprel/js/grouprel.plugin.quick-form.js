@@ -153,7 +153,7 @@
             switch (this.options.btn_submit_type || "default") {
                 case "remove":
                     return '<a class="btn btn-danger text-white btn-submit">' +
-                           '<i class="fa fa-trash-o"></i>&nbsp' +
+                           '<i class="fa fa-trash-alt"></i>&nbsp' +
                             gettext("Remove") +
                             '</a>';
                 default:
