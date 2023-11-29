@@ -4,8 +4,8 @@ import inspect
 from django.conf import settings
 from django.forms import Media
 from django.template.loader import render_to_string
-from django.utils.encoding import force_text
-from django.utils.translation import ugettext as _
+from django.utils.encoding import force_str
+from django.utils.translation import gettext as _
 from xadmin import site
 from xadmin.plugins.utils import get_context_dict
 from xadmin.views import BaseAdminPlugin
@@ -62,13 +62,13 @@ class GroupRelPlugin(BaseAdminPlugin):
         context['table_object_add'] = {
             'url': self.admin_view.get_admin_url("grouprel-ajax-table",
                                                  pk=self.admin_view.org_obj.pk),
-            'title': _('Add %s') % force_text(model._meta.verbose_name_plural)
+            'title': _('Add %s') % force_str(model._meta.verbose_name_plural)
         }
         context['table_object_remove'] = {
             'url': self.admin_view.get_admin_url("grouprel-objs-remove",
                                                  pk=self.admin_view.org_obj.pk),
             'title': _("Remove %(objs)s") % {
-                'objs': force_text(model._meta.verbose_name_plural)
+                'objs': force_str(model._meta.verbose_name_plural)
             }
         }
         return context

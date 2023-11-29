@@ -10,7 +10,7 @@ from django.db import models
 from django.db.models import Q
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 from django_datatables_view.base_datatable_view import BaseDatatableView
 from xadmin.plugins.actions import DeleteSelectedAction
 from xadmin.views import BaseAdminView, CommAdminView
