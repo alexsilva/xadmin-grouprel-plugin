@@ -2,6 +2,8 @@ import six
 from django.apps import apps
 from django.contrib.auth.models import Group
 from django.core.exceptions import PermissionDenied, ValidationError
+from django.utils.html import escape
+
 try:
     from django.urls import reverse
 except ImportError:
@@ -235,7 +237,7 @@ class GroupRelDataView(BaseDatatableView, BaseAdminView):
                 self.has_model_perm(self.table.get_model(), 'change', self.request.user):
             field_name = getattr(obj, field if isinstance(field, six.string_types) else field.name)
             change_url = self.get_model_url(self.table.get_model(), 'change', field_name)
-            return '<a href="{0}">{1}</a>'.format(change_url, value)
+            return '<a href="{0}">{1}</a>'.format(change_url, escape(value))
         return value
 
     def initialize(self, *args, **kwargs):
