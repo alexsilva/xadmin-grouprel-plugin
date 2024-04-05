@@ -1,13 +1,12 @@
 # coding=utf-8
 import inspect
-
-from django.conf import settings
 from django.forms import Media
 from django.template.loader import render_to_string
 from django.utils.encoding import force_str
 from django.utils.translation import gettext as _
 from xadmin import site
 from xadmin.plugins.utils import get_context_dict
+from xadmin.util import vendor
 from xadmin.views import BaseAdminPlugin
 
 from xadmin_group_related.views import (
@@ -86,22 +85,14 @@ class GroupRelPlugin(BaseAdminPlugin):
         return nodes.append(html)
 
     def get_media(self, media):
+        media += vendor("datatables.css", "datatables.js")
         media += Media(css={
             'screen': (
-                settings.STATIC_URL + "xplugin-grouprel/css/dataTables.bootstrap.min.css",
-                settings.STATIC_URL + "xplugin-grouprel/css/select.bootstrap.min.css",
-                settings.STATIC_URL + "xplugin-grouprel/css/dataTables.checkboxes.css",
-                settings.STATIC_URL + "xplugin-grouprel/css/styles.css",
+                "xplugin-grouprel/css/styles.css",
             )
         }, js=(
-            settings.STATIC_URL + "xplugin-grouprel/js/jquery.dataTables.min.js",
-            settings.STATIC_URL + "xplugin-grouprel/js/dataTables.bootstrap.min.js",
-            settings.STATIC_URL + "xplugin-grouprel/js/dataTables.buttons.min.js",
-            settings.STATIC_URL + "xplugin-grouprel/js/dataTables.select.min.js",
-            settings.STATIC_URL + "xplugin-grouprel/js/dataTables.checkboxes.min.js",
-            settings.STATIC_URL + "xplugin-grouprel/js/select.bootstrap.min.js",
-            settings.STATIC_URL + "xplugin-grouprel/js/grouprel.plugin.quick-form.js",
-            settings.STATIC_URL + "xplugin-grouprel/js/group.table.plugin.js",
+            "xplugin-grouprel/js/grouprel.plugin.quick-form.js",
+            "xplugin-grouprel/js/group.table.plugin.js",
         ))
         return media
 
