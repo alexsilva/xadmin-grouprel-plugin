@@ -13,12 +13,12 @@
                 },
                 language: {
                     url: static_url + window.xadmin.language_code.toLowerCase() + ".json",
-                    select: {
-                    rows: {
-                        _: gettext("%d rows selected"),
-                        0: gettext("Click a row to select it"),
-                        1: gettext("1 row selected")
-                    }
+                        select: {
+                        rows: {
+                            _: gettext("%d rows selected"),
+                            0: gettext("Click a row to select it"),
+                            1: gettext("1 row selected")
+                        }
                     }
                 },
                 order: datatable_config.get_columns_order(),
