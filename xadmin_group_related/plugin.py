@@ -88,9 +88,11 @@ class GroupRelPlugin(BaseAdminPlugin):
         media += vendor("datatables.css", "datatables.js")
         media += Media(css={
             'screen': (
+                "xplugin-grouprel/css/dataTables.checkboxes.css",
                 "xplugin-grouprel/css/styles.css",
             )
         }, js=(
+            "xplugin-grouprel/js/dataTables.checkboxes.min.js",
             "xplugin-grouprel/js/grouprel.plugin.quick-form.js",
             "xplugin-grouprel/js/group.table.plugin.js",
         ))
