@@ -1,5 +1,6 @@
 <script type="application/javascript">
 $(function () {
+    var datatable_config = xadmin.datatable_config;
     datatable_config.buttons = [];
     {% if has_group_rel_change_perm %}
     datatable_config.buttons.push({
@@ -12,7 +13,7 @@ $(function () {
                 var $ele = $(this);
                 $ele.removeClass("has-error");
                 $ele.parent().find("span[id^=error_]").remove()
-            })
+            });
         },
     });
     datatable_config.buttons.push({
@@ -39,8 +40,19 @@ $(function () {
                         }
                     });
                 }
+            });
+        },
+        init: function (dt, node, config) {
+            var self = this;
+            $.proxy(DataTable.ext.buttons.selected.init, this)(dt, node, config);
+            var column_index = datatable_config.get_checkboxes_column_index(),
+                checkEnable = function (){
+                  return dt.column(column_index).checkboxes.selected().length > 0;
+                }
+            dt.on('draw.dt.dtCheckboxes select.dtcheckboxes deselect.dtcheckboxes', function () {
+                self.enable(checkEnable());
             })
-        }
+        },
     });
     {% endif %}
     datatable_config.initComplete = function () {
