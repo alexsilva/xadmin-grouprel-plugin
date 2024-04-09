@@ -10,48 +10,51 @@
 
 {% block box_content %}
     <script type="application/javascript">
-        var datatable_config = {
-            ajax: {
-                url: "{{ ajax_table_url }}"
-            },
-            columns_defs: [],
-            // utils
-            get_columns_order: function() {
-                var order = [];
-                $.each(this.columns_defs, function (index, column) {
-                    if (column.order) { order.push([column.targets, column.order]); }
-                });
-                return order;
-            },
-            // utils
-            get_checkboxes_column_index: function() {
-                var checkboxes_index = 0;
-                // get checkbox column index
-                $.each(this.columns_defs, function (index, value) {
-                    if (value.checkboxes !== false) {
-                        checkboxes_index = index;
-                        return false;
-                    }
-                });
-                return checkboxes_index;
-            }
-        };
-        {% for column in table.columns %}
-        datatable_config.columns_defs.push({
-            targets: {{ column.datatable.index }},
-            searchable: {{ column.datatable.searchable|yesno:"true,false" }},
-            orderable: {{ column.datatable.orderable|yesno:"true,false" }},
-            visible: {{ column.datatable.visible|yesno:"true,false" }},
-            className: {% if column.datatable.className %}"{{ column.datatable.className }}"{% else %}null{% endif %},
-            checkboxes: {{ column.datatable.checkboxes|json_dumps|safe }},
-            {% if column.datatable.render %}
-            render: {{ column.datatable.render|safe }},
-            {% endif %}
-            {% if column.datatable.order %}
-            order: "{{ column.datatable.order }}",
-            {% endif %}
+        $(function() {
+            xadmin.datatable_config = {
+                ajax: {
+                    url: "{{ ajax_table_url }}"
+                },
+                columns_defs: [],
+                // utils
+                get_columns_order: function() {
+                    var order = [];
+                    $.each(this.columns_defs, function (index, column) {
+                        if (column.order) { order.push([column.targets, column.order]); }
+                    });
+                    return order;
+                },
+                // utils
+                get_checkboxes_column_index: function() {
+                    var checkboxes_index = 0;
+                    // get checkbox column index
+                    $.each(this.columns_defs, function (index, value) {
+                        if (value.checkboxes !== false) {
+                            checkboxes_index = index;
+                            return false;
+                        }
+                    });
+                    return checkboxes_index;
+                }
+            };
+
+            {% for column in table.columns %}
+            xadmin.datatable_config.columns_defs.push({
+                targets: {{ column.datatable.index }},
+                searchable: {{ column.datatable.searchable|yesno:"true,false" }},
+                orderable: {{ column.datatable.orderable|yesno:"true,false" }},
+                visible: {{ column.datatable.visible|yesno:"true,false" }},
+                className: {% if column.datatable.className %}"{{ column.datatable.className }}"{% else %}null{% endif %},
+                checkboxes: {{ column.datatable.checkboxes|json_dumps|safe }},
+                {% if column.datatable.render %}
+                render: {{ column.datatable.render|safe }},
+                {% endif %}
+                {% if column.datatable.order %}
+                order: "{{ column.datatable.order }}",
+                {% endif %}
+            });
+            {% endfor %}
         });
-        {% endfor %}
     </script>
 
     {% block table_content %}
