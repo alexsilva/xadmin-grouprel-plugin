@@ -27,7 +27,8 @@
                 serverSide: true,
                 select: {
                     style: 'multi',
-                    selector: 'td:first-child'
+                    selector: 'td:first-child',
+                    info: true
                 },
                 columnDefs: datatable_config.columns_defs,
                 initComplete: function () {
