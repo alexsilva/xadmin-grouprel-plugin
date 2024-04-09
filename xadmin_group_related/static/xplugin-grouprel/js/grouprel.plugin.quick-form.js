@@ -98,7 +98,7 @@
                 contentType: false,
                 processData: false,
                 beforeSend: function (xhr, settings) {
-                    xhr.setRequestHeader("X-CSRFToken", $.getCookie('csrftoken'));
+                    xhr.setRequestHeader("X-CSRFToken", $.getCSRFToken());
                 }
             })
         },
@@ -178,7 +178,7 @@
             this.modal.find('.modal-body').html('<h2 class="text-center"><i class="fa-spinner fa-spin fa fa-large"></i></h2>');
             var data = this.options.data || null;
             if (data != null && Object.keys(data).length > 0) { // post
-                data.csrfmiddlewaretoken = $.getCookie('csrftoken');
+                data.csrfmiddlewaretoken = $.getCSRFToken();
             }
             this.modal.find('.modal-body').load(this.url, data,
                 function (form_html, status, xhr) {

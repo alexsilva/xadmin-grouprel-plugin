@@ -1,7 +1,6 @@
 (function ($) {
     $.fn.create_table = function (datatable_config) {
-        var tokenInput = $('[name=csrfmiddlewaretoken]'),
-            csrftoken = tokenInput.val() || $.getCookie('csrftoken'),
+            var csrftoken = $.getCSRFToken(),
             static_url = window.xadmin.media_prefix.replace(/xadmin\/$/i, "xplugin-grouprel/"),
             config = {
                 ajax: {
