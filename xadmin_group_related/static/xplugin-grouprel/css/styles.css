@@ -3,6 +3,11 @@ div#group-rel-ajax-table_wrapper {
     margin-top: 10px;
 }
 
+.card-body > div#group-rel-table_wrapper,
+.card-body > div#group-rel-ajax-table_wrapper {
+    margin-top: 0;
+}
+
 div#group-rel-table_wrapper {
     position: relative;
 }
@@ -15,6 +20,10 @@ div.dt-buttons {
     margin-right: 15px;
     position: relative;
     float: left;
+}
+
+div.dt-container div.dt-length label + select {
+ margin-left: .25rem;
 }
 
 a.btn-table-new {
@@ -57,22 +66,4 @@ div.dataTables_wrapper div.dataTables_info {
 div.dataTables_wrapper div.dataTables_paginate {
     float: right;
     padding-top: 0.25em;
-}
-
-a.btn-link {
-    color: #606072;
-}
-
-a.dt-button.btn {
-   font-size: inherit;
-   margin-top: -1px;
-}
-
-a.dt-button.btn.btn-separator:after {
-    content: '';
-    position: absolute;
-    top:6px;
-    height: 18px;
-    border-left: 1px solid #d6d7d9;
-    margin-left: 13px;
 }
