@@ -40,7 +40,7 @@
 
             config.dom = "<'card card-body bg-secondary'<'row justify-content-start align-items-center '<'col-auto'B><'col-auto col-xl col-xxl-auto'l><'col-12 d-xl-none'<'border-top my-2 my-md-3'>><'col-auto'f>>>" +
                 "<'row mt-3'<'col-12'rt>>" +
-                "<'row'<'col-12 col-xl'i><'col-12 col-xl'p>>";
+                "<'row align-items-center'<'col-12 col-xl'i><'col-12 col-xl-auto'p>>";
             config.buttons = datatable_config.buttons
         }
         var table = this.DataTable(config);
